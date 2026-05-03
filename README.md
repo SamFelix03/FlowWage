@@ -56,6 +56,8 @@ FlowWage does this as one execution with structured outcomes (`depositTxnRef`, `
 
 This implementation uses a single full graph workflow:
 
+<img width="1920" height="1080" alt="Green and Black Neon Clean Business Proposal Presentation" src="https://github.com/user-attachments/assets/256d948a-964e-4583-86f9-54c801cd9142" />
+
 - Entry and income context:
   - `request-finance/*`
   - `sablier/*`
