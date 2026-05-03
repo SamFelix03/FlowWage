@@ -135,7 +135,7 @@ This section highlights concrete code paths and implementation patterns.
 
 ### XMTP inbox subscription context initialization
 
-File: [keeperhub/plugins/xmtp/steps/subscribe-to-inbox.ts](/Users/sam/FlowWage/keeperhub/plugins/xmtp/steps/subscribe-to-inbox.ts)
+File: [keeperhub/plugins/xmtp/steps/subscribe-to-inbox.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/xmtp/steps/subscribe-to-inbox.ts)
 
 ```ts
 const env = resolveXmtpEnv(input.xmtpEnv || credentials.XMTP_ENV);
@@ -154,7 +154,7 @@ Why this matters:
 
 ### Persona verification snapshot resolution
 
-File: [keeperhub/plugins/persona/steps/check-verification-status.ts](/Users/sam/FlowWage/keeperhub/plugins/persona/steps/check-verification-status.ts)
+File: [keeperhub/plugins/persona/steps/check-verification-status.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/persona/steps/check-verification-status.ts)
 
 ```ts
 const snapshot = await getPersonaVerificationSnapshot(input, credentials);
@@ -175,7 +175,7 @@ Why this matters:
 
 ### Offramp quote ranking logic
 
-File: [keeperhub/plugins/offramp/steps/get-best-quote.ts](/Users/sam/FlowWage/keeperhub/plugins/offramp/steps/get-best-quote.ts)
+File: [keeperhub/plugins/offramp/steps/get-best-quote.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/offramp/steps/get-best-quote.ts)
 
 ```ts
 const ranked = [...quotes].sort(
@@ -196,7 +196,7 @@ Why this matters:
 
 ### Superchain initiate execution with nonce-safe sequencing
 
-File: [keeperhub/plugins/superchain/steps/initiate-transfer.ts](/Users/sam/FlowWage/keeperhub/plugins/superchain/steps/initiate-transfer.ts)
+File: [keeperhub/plugins/superchain/steps/initiate-transfer.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/superchain/steps/initiate-transfer.ts)
 
 ```ts
 const signer = await initializeWalletSigner(organizationId, rpcUrl, originChainId);
@@ -225,7 +225,7 @@ Why this matters:
 
 ### Across route preflight
 
-File: [keeperhub/plugins/superchain/steps/route-preflight.ts](/Users/sam/FlowWage/keeperhub/plugins/superchain/steps/route-preflight.ts)
+File: [keeperhub/plugins/superchain/steps/route-preflight.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/superchain/steps/route-preflight.ts)
 
 Use in `initiate-transfer`/`get-route-quote` ensures route/token-chain compatibility before execution attempt.
 
@@ -233,9 +233,9 @@ Use in `initiate-transfer`/`get-route-quote` ensures route/token-chain compatibi
 
 Files:
 
-- [keeperhub/protocols/aave-v3.ts](/Users/sam/FlowWage/keeperhub/protocols/aave-v3.ts)
-- [keeperhub/protocols/abis/aave-v3-pool.json](/Users/sam/FlowWage/keeperhub/protocols/abis/aave-v3-pool.json)
-- [keeperhub/protocols/abis/aave-v3-data-provider.json](/Users/sam/FlowWage/keeperhub/protocols/abis/aave-v3-data-provider.json)
+- [keeperhub/protocols/aave-v3.ts](https://github.com/SamFelix03/keeperhub/blob/staging/protocols/aave-v3.ts)
+- [keeperhub/protocols/abis/aave-v3-pool.json](https://github.com/SamFelix03/keeperhub/blob/staging/protocols/abis/aave-v3-pool.json)
+- [keeperhub/protocols/abis/aave-v3-data-provider.json](https://github.com/SamFelix03/keeperhub/blob/staging/protocols/abis/aave-v3-data-provider.json)
 
 Why this matters:
 
@@ -252,12 +252,12 @@ Why this matters:
   - `parse-payment-intent`
   - `send-transaction-receipt`
 - Primary files:
-  - [keeperhub/plugins/xmtp/index.ts](/Users/sam/FlowWage/keeperhub/plugins/xmtp/index.ts)
-  - [keeperhub/plugins/xmtp/steps/xmtp-core.ts](/Users/sam/FlowWage/keeperhub/plugins/xmtp/steps/xmtp-core.ts)
-  - [keeperhub/plugins/xmtp/steps/parse-payment-intent.ts](/Users/sam/FlowWage/keeperhub/plugins/xmtp/steps/parse-payment-intent.ts)
-  - [keeperhub/plugins/xmtp/steps/send-message.ts](/Users/sam/FlowWage/keeperhub/plugins/xmtp/steps/send-message.ts)
-  - [keeperhub/plugins/xmtp/steps/subscribe-to-inbox.ts](/Users/sam/FlowWage/keeperhub/plugins/xmtp/steps/subscribe-to-inbox.ts)
-  - [keeperhub/plugins/xmtp/steps/send-transaction-receipt.ts](/Users/sam/FlowWage/keeperhub/plugins/xmtp/steps/send-transaction-receipt.ts)
+  - [keeperhub/plugins/xmtp/index.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/xmtp/index.ts)
+  - [keeperhub/plugins/xmtp/steps/xmtp-core.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/xmtp/steps/xmtp-core.ts)
+  - [keeperhub/plugins/xmtp/steps/parse-payment-intent.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/xmtp/steps/parse-payment-intent.ts)
+  - [keeperhub/plugins/xmtp/steps/send-message.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/xmtp/steps/send-message.ts)
+  - [keeperhub/plugins/xmtp/steps/subscribe-to-inbox.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/xmtp/steps/subscribe-to-inbox.ts)
+  - [keeperhub/plugins/xmtp/steps/send-transaction-receipt.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/xmtp/steps/send-transaction-receipt.ts)
 
 ### `persona` plugin
 
@@ -269,13 +269,13 @@ Why this matters:
   - `subscribe-verification-webhook`
   - `get-transaction-limits`
 - Files:
-  - [keeperhub/plugins/persona/index.ts](/Users/sam/FlowWage/keeperhub/plugins/persona/index.ts)
-  - [keeperhub/plugins/persona/steps/persona-core.ts](/Users/sam/FlowWage/keeperhub/plugins/persona/steps/persona-core.ts)
-  - [keeperhub/plugins/persona/steps/check-verification-status.ts](/Users/sam/FlowWage/keeperhub/plugins/persona/steps/check-verification-status.ts)
-  - [keeperhub/plugins/persona/steps/create-inquiry.ts](/Users/sam/FlowWage/keeperhub/plugins/persona/steps/create-inquiry.ts)
-  - [keeperhub/plugins/persona/steps/get-cleared-corridors.ts](/Users/sam/FlowWage/keeperhub/plugins/persona/steps/get-cleared-corridors.ts)
-  - [keeperhub/plugins/persona/steps/get-transaction-limits.ts](/Users/sam/FlowWage/keeperhub/plugins/persona/steps/get-transaction-limits.ts)
-  - [keeperhub/plugins/persona/steps/subscribe-verification-webhook.ts](/Users/sam/FlowWage/keeperhub/plugins/persona/steps/subscribe-verification-webhook.ts)
+  - [keeperhub/plugins/persona/index.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/persona/index.ts)
+  - [keeperhub/plugins/persona/steps/persona-core.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/persona/steps/persona-core.ts)
+  - [keeperhub/plugins/persona/steps/check-verification-status.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/persona/steps/check-verification-status.ts)
+  - [keeperhub/plugins/persona/steps/create-inquiry.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/persona/steps/create-inquiry.ts)
+  - [keeperhub/plugins/persona/steps/get-cleared-corridors.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/persona/steps/get-cleared-corridors.ts)
+  - [keeperhub/plugins/persona/steps/get-transaction-limits.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/persona/steps/get-transaction-limits.ts)
+  - [keeperhub/plugins/persona/steps/subscribe-verification-webhook.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/persona/steps/subscribe-verification-webhook.ts)
 
 ### `offramp` plugin
 
@@ -287,13 +287,13 @@ Why this matters:
   - `trigger-conversion`
   - `get-conversion-status`
 - Files:
-  - [keeperhub/plugins/offramp/index.ts](/Users/sam/FlowWage/keeperhub/plugins/offramp/index.ts)
-  - [keeperhub/plugins/offramp/steps/offramp-core.ts](/Users/sam/FlowWage/keeperhub/plugins/offramp/steps/offramp-core.ts)
-  - [keeperhub/plugins/offramp/steps/get-supported-corridors.ts](/Users/sam/FlowWage/keeperhub/plugins/offramp/steps/get-supported-corridors.ts)
-  - [keeperhub/plugins/offramp/steps/get-best-quote.ts](/Users/sam/FlowWage/keeperhub/plugins/offramp/steps/get-best-quote.ts)
-  - [keeperhub/plugins/offramp/steps/get-rate-history.ts](/Users/sam/FlowWage/keeperhub/plugins/offramp/steps/get-rate-history.ts)
-  - [keeperhub/plugins/offramp/steps/trigger-conversion.ts](/Users/sam/FlowWage/keeperhub/plugins/offramp/steps/trigger-conversion.ts)
-  - [keeperhub/plugins/offramp/steps/get-conversion-status.ts](/Users/sam/FlowWage/keeperhub/plugins/offramp/steps/get-conversion-status.ts)
+  - [keeperhub/plugins/offramp/index.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/offramp/index.ts)
+  - [keeperhub/plugins/offramp/steps/offramp-core.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/offramp/steps/offramp-core.ts)
+  - [keeperhub/plugins/offramp/steps/get-supported-corridors.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/offramp/steps/get-supported-corridors.ts)
+  - [keeperhub/plugins/offramp/steps/get-best-quote.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/offramp/steps/get-best-quote.ts)
+  - [keeperhub/plugins/offramp/steps/get-rate-history.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/offramp/steps/get-rate-history.ts)
+  - [keeperhub/plugins/offramp/steps/trigger-conversion.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/offramp/steps/trigger-conversion.ts)
+  - [keeperhub/plugins/offramp/steps/get-conversion-status.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/offramp/steps/get-conversion-status.ts)
 
 ### `superchain` plugin
 
@@ -304,13 +304,13 @@ Why this matters:
   - `initiate-transfer`
   - `poll-transfer-status`
 - Files:
-  - [keeperhub/plugins/superchain/index.ts](/Users/sam/FlowWage/keeperhub/plugins/superchain/index.ts)
-  - [keeperhub/plugins/superchain/steps/superchain-core.ts](/Users/sam/FlowWage/keeperhub/plugins/superchain/steps/superchain-core.ts)
-  - [keeperhub/plugins/superchain/steps/route-preflight.ts](/Users/sam/FlowWage/keeperhub/plugins/superchain/steps/route-preflight.ts)
-  - [keeperhub/plugins/superchain/steps/get-supported-routes.ts](/Users/sam/FlowWage/keeperhub/plugins/superchain/steps/get-supported-routes.ts)
-  - [keeperhub/plugins/superchain/steps/get-route-quote.ts](/Users/sam/FlowWage/keeperhub/plugins/superchain/steps/get-route-quote.ts)
-  - [keeperhub/plugins/superchain/steps/initiate-transfer.ts](/Users/sam/FlowWage/keeperhub/plugins/superchain/steps/initiate-transfer.ts)
-  - [keeperhub/plugins/superchain/steps/poll-transfer-status.ts](/Users/sam/FlowWage/keeperhub/plugins/superchain/steps/poll-transfer-status.ts)
+  - [keeperhub/plugins/superchain/index.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/superchain/index.ts)
+  - [keeperhub/plugins/superchain/steps/superchain-core.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/superchain/steps/superchain-core.ts)
+  - [keeperhub/plugins/superchain/steps/route-preflight.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/superchain/steps/route-preflight.ts)
+  - [keeperhub/plugins/superchain/steps/get-supported-routes.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/superchain/steps/get-supported-routes.ts)
+  - [keeperhub/plugins/superchain/steps/get-route-quote.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/superchain/steps/get-route-quote.ts)
+  - [keeperhub/plugins/superchain/steps/initiate-transfer.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/superchain/steps/initiate-transfer.ts)
+  - [keeperhub/plugins/superchain/steps/poll-transfer-status.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/superchain/steps/poll-transfer-status.ts)
 
 ### `request-finance` plugin
 
@@ -319,25 +319,25 @@ Why this matters:
   - `subscribe-invoice-events`
   - `get-payment-history`
 - Files:
-  - [keeperhub/plugins/request-finance/index.ts](/Users/sam/FlowWage/keeperhub/plugins/request-finance/index.ts)
-  - [keeperhub/plugins/request-finance/steps/request-finance-core.ts](/Users/sam/FlowWage/keeperhub/plugins/request-finance/steps/request-finance-core.ts)
-  - [keeperhub/plugins/request-finance/steps/subscribe-invoice-events.ts](/Users/sam/FlowWage/keeperhub/plugins/request-finance/steps/subscribe-invoice-events.ts)
-  - [keeperhub/plugins/request-finance/steps/get-payment-history.ts](/Users/sam/FlowWage/keeperhub/plugins/request-finance/steps/get-payment-history.ts)
+  - [keeperhub/plugins/request-finance/index.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/request-finance/index.ts)
+  - [keeperhub/plugins/request-finance/steps/request-finance-core.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/request-finance/steps/request-finance-core.ts)
+  - [keeperhub/plugins/request-finance/steps/subscribe-invoice-events.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/request-finance/steps/subscribe-invoice-events.ts)
+  - [keeperhub/plugins/request-finance/steps/get-payment-history.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/request-finance/steps/get-payment-history.ts)
 
 ### Signal plugins used by the same E2E graph
 
 - Sablier:
-  - [keeperhub/plugins/sablier/steps/subscribe-to-stream-events.ts](/Users/sam/FlowWage/keeperhub/plugins/sablier/steps/subscribe-to-stream-events.ts)
-  - [keeperhub/plugins/sablier/steps/get-stream-state.ts](/Users/sam/FlowWage/keeperhub/plugins/sablier/steps/get-stream-state.ts)
-  - [keeperhub/plugins/sablier/steps/get-unlockable-amount.ts](/Users/sam/FlowWage/keeperhub/plugins/sablier/steps/get-unlockable-amount.ts)
+  - [keeperhub/plugins/sablier/steps/subscribe-to-stream-events.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/sablier/steps/subscribe-to-stream-events.ts)
+  - [keeperhub/plugins/sablier/steps/get-stream-state.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/sablier/steps/get-stream-state.ts)
+  - [keeperhub/plugins/sablier/steps/get-unlockable-amount.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/sablier/steps/get-unlockable-amount.ts)
 - Superfluid:
-  - [keeperhub/plugins/superfluid/steps/get-stream-events.ts](/Users/sam/FlowWage/keeperhub/plugins/superfluid/steps/get-stream-events.ts)
-  - [keeperhub/plugins/superfluid/steps/get-incoming-streams.ts](/Users/sam/FlowWage/keeperhub/plugins/superfluid/steps/get-incoming-streams.ts)
-  - [keeperhub/plugins/superfluid/steps/get-real-time-balance.ts](/Users/sam/FlowWage/keeperhub/plugins/superfluid/steps/get-real-time-balance.ts)
+  - [keeperhub/plugins/superfluid/steps/get-stream-events.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/superfluid/steps/get-stream-events.ts)
+  - [keeperhub/plugins/superfluid/steps/get-incoming-streams.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/superfluid/steps/get-incoming-streams.ts)
+  - [keeperhub/plugins/superfluid/steps/get-real-time-balance.ts](https://github.com/SamFelix03/keeperhub/blob/staging/plugins/superfluid/steps/get-real-time-balance.ts)
 
 ## Route-by-Route Workflow Explanation
 
-Workflow file: [FLOWWAGE_FULL_E2E.workflow.json](/Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_FULL_E2E.workflow.json)
+Workflow file: [FLOWWAGE_FULL_E2E.workflow.json](https://github.com/SamFelix03/FlowWage/blob/master/flowwage_workflow/workflows/FLOWWAGE_FULL_E2E.workflow.json)
 
 1. `request-finance/subscribe-invoice-events` and `request-finance/get-payment-history`
    - bootstrap invoice payment signal.
