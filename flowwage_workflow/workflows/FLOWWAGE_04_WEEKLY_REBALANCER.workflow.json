@@ -1,0 +1,244 @@
+{
+  "version": 1,
+  "exportedAt": "2026-05-03T00:00:00.000Z",
+  "workflow": {
+    "name": "FlowWage 04 - Weekly Rebalancer",
+    "description": "Weekly route/APY check with rebalance execution threshold and notification."
+  },
+  "nodes": [
+    {
+      "id": "trigger-1",
+      "type": "trigger",
+      "position": {
+        "x": 0,
+        "y": 180
+      },
+      "data": {
+        "label": "Weekly Schedule",
+        "type": "trigger",
+        "config": {
+          "triggerType": "Schedule",
+          "scheduleCron": "0 12 * * 1",
+          "scheduleTimezone": "UTC"
+        }
+      }
+    },
+    {
+      "id": "balance",
+      "type": "action",
+      "position": {
+        "x": 240,
+        "y": 120
+      },
+      "data": {
+        "label": "Check USDC Balance",
+        "type": "action",
+        "config": {
+          "actionType": "web3/check-token-balance",
+          "network": "11155420",
+          "address": "{{@trigger-1:Weekly Schedule.walletAddress}}",
+          "tokenConfig": "{\"mode\":\"custom\",\"customToken\":{\"address\":\"0x5fd84259d66cd46123540766be93dfe6d43130d7\",\"symbol\":\"USDC\"}}"
+        }
+      }
+    },
+    {
+      "id": "route-quote",
+      "type": "action",
+      "position": {
+        "x": 480,
+        "y": 120
+      },
+      "data": {
+        "label": "Superchain Route Quote",
+        "type": "action",
+        "config": {
+          "actionType": "superchain/get-route-quote",
+          "networkMode": "testnet",
+          "tradeType": "exactInput",
+          "originChainId": "11155420",
+          "destinationChainId": "11155111",
+          "inputToken": "0x5fd84259d66cd46123540766be93dfe6d43130d7",
+          "outputToken": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+          "amount": "1000000",
+          "depositor": "{{@trigger-1:Weekly Schedule.walletAddress}}",
+          "recipient": "{{@trigger-1:Weekly Schedule.walletAddress}}"
+        }
+      }
+    },
+    {
+      "id": "apyrule",
+      "type": "action",
+      "position": {
+        "x": 720,
+        "y": 120
+      },
+      "data": {
+        "label": "Rebalance Threshold",
+        "type": "action",
+        "config": {
+          "actionType": "code/run-code",
+          "code": "const simulatedDeltaPct = Number({{@trigger-1:Weekly Schedule.deltaPct}} ?? 0.2);\nreturn { simulatedDeltaPct, rebalance: simulatedDeltaPct >= 0.5 };"
+        }
+      }
+    },
+    {
+      "id": "rebalance-check",
+      "type": "action",
+      "position": {
+        "x": 960,
+        "y": 120
+      },
+      "data": {
+        "label": "Rebalance?",
+        "type": "action",
+        "config": {
+          "actionType": "Condition",
+          "condition": "{{@apyrule:Rebalance Threshold.result.rebalance}} == true",
+          "conditionConfig": {
+            "group": {
+              "id": "rebalance-check",
+              "logic": "AND",
+              "rules": [
+                {
+                  "id": "reb-rule",
+                  "operator": "=",
+                  "leftOperand": "{{@apyrule:Rebalance Threshold.result.rebalance}}",
+                  "rightOperand": "true"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "init-transfer",
+      "type": "action",
+      "position": {
+        "x": 1200,
+        "y": 80
+      },
+      "data": {
+        "label": "Initiate Rebalance Route",
+        "type": "action",
+        "config": {
+          "actionType": "superchain/initiate-transfer",
+          "networkMode": "testnet",
+          "tradeType": "exactInput",
+          "originChainId": "11155420",
+          "destinationChainId": "11155111",
+          "inputToken": "0x5fd84259d66cd46123540766be93dfe6d43130d7",
+          "outputToken": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+          "amount": "1000000",
+          "depositor": "{{@trigger-1:Weekly Schedule.walletAddress}}",
+          "recipient": "{{@trigger-1:Weekly Schedule.walletAddress}}",
+          "executeOnchain": "true"
+        }
+      }
+    },
+    {
+      "id": "poll-transfer",
+      "type": "action",
+      "position": {
+        "x": 1440,
+        "y": 80
+      },
+      "data": {
+        "label": "Poll Rebalance Transfer",
+        "type": "action",
+        "config": {
+          "actionType": "superchain/poll-transfer-status",
+          "networkMode": "testnet",
+          "depositTxnRef": "{{@init-transfer:Initiate Rebalance Route.depositTxnRef}}"
+        }
+      }
+    },
+    {
+      "id": "xmtp-ok",
+      "type": "action",
+      "position": {
+        "x": 1680,
+        "y": 80
+      },
+      "data": {
+        "label": "XMTP Rebalanced",
+        "type": "action",
+        "config": {
+          "actionType": "xmtp/send-message",
+          "recipientAddress": "{{@trigger-1:Weekly Schedule.walletAddress}}",
+          "message": "Weekly rebalance executed. Transfer status={{@poll-transfer:Poll Rebalance Transfer.status}}"
+        }
+      }
+    },
+    {
+      "id": "xmtp-skip",
+      "type": "action",
+      "position": {
+        "x": 1200,
+        "y": 260
+      },
+      "data": {
+        "label": "XMTP No Rebalance",
+        "type": "action",
+        "config": {
+          "actionType": "xmtp/send-message",
+          "recipientAddress": "{{@trigger-1:Weekly Schedule.walletAddress}}",
+          "message": "Weekly rebalance skipped. Delta below threshold."
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger-1",
+      "target": "balance",
+      "type": "animated"
+    },
+    {
+      "id": "e2",
+      "source": "balance",
+      "target": "apyrule",
+      "type": "animated"
+    },
+    {
+      "id": "e3",
+      "source": "apyrule",
+      "target": "rebalance-check",
+      "type": "animated"
+    },
+    {
+      "id": "e4",
+      "source": "rebalance-check",
+      "target": "route-quote",
+      "sourceHandle": "true",
+      "type": "animated"
+    },
+    {
+      "id": "e5",
+      "source": "route-quote",
+      "target": "init-transfer",
+      "type": "animated"
+    },
+    {
+      "id": "e6",
+      "source": "init-transfer",
+      "target": "poll-transfer",
+      "type": "animated"
+    },
+    {
+      "id": "e7",
+      "source": "poll-transfer",
+      "target": "xmtp-ok",
+      "type": "animated"
+    },
+    {
+      "id": "e8",
+      "source": "rebalance-check",
+      "target": "xmtp-skip",
+      "sourceHandle": "false",
+      "type": "animated"
+    }
+  ],
+  "integrationBindings": []
+}

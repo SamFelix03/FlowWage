@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "exportedAt": "2026-05-03T00:00:00.000Z",
+  "workflow": {
+    "name": "FlowWage 05 - XMTP Inbox Trigger",
+    "description": "Configure XMTP inbox subscription and parse programmable payment intent."
+  },
+  "nodes": [
+    { "id": "trigger-1", "type": "trigger", "position": { "x": 0, "y": 160 }, "data": { "label": "Manual Trigger", "type": "trigger", "config": { "triggerType": "Manual" } } },
+    { "id": "xmtp-sub", "type": "action", "position": { "x": 240, "y": 160 }, "data": { "label": "XMTP Subscribe Inbox", "type": "action", "config": { "actionType": "xmtp/subscribe-to-inbox", "webhookUrl": "https://example.com/webhooks/xmtp", "whitelistSenders": "0x1111111111111111111111111111111111111111", "pollIntervalSeconds": "30", "xmtpEnv": "testnet" } } },
+    { "id": "xmtp-parse", "type": "action", "position": { "x": 480, "y": 160 }, "data": { "label": "Parse Payment Intent", "type": "action", "config": { "actionType": "xmtp/parse-payment-intent", "messageBody": "{\"type\":\"payment\",\"amount\":500,\"token\":\"USDC\",\"chain\":\"op-sepolia\",\"recipient\":\"0x1111111111111111111111111111111111111111\"}" } } },
+    { "id": "xmtp-ack", "type": "action", "position": { "x": 720, "y": 160 }, "data": { "label": "Send XMTP Ack", "type": "action", "config": { "actionType": "xmtp/send-message", "recipientAddress": "{{@xmtp-parse:Parse Payment Intent.intent.recipient}}", "message": "Payment intent received and validated. Amount={{@xmtp-parse:Parse Payment Intent.intent.amount}} {{@xmtp-parse:Parse Payment Intent.intent.token}}" } } }
+  ],
+  "edges": [
+    { "id": "e1", "source": "trigger-1", "target": "xmtp-sub", "type": "animated" },
+    { "id": "e2", "source": "xmtp-sub", "target": "xmtp-parse", "type": "animated" },
+    { "id": "e3", "source": "xmtp-parse", "target": "xmtp-ack", "type": "animated" }
+  ],
+  "integrationBindings": []
+}

@@ -1,1 +1,219 @@
-{"import": true}
+{
+  "version": 1,
+  "exportedAt": "2026-05-03T00:00:00.000Z",
+  "workflow": {
+    "name": "FlowWage E2E (Persona Gate + XMTP Receipts)",
+    "description": "Income intent parsing, allocation split, Persona-gated off-ramp path, and XMTP notifications."
+  },
+  "nodes": [
+    {
+      "id": "trigger-1",
+      "type": "trigger",
+      "position": { "x": 0, "y": 200 },
+      "data": {
+        "label": "Manual Trigger",
+        "type": "trigger",
+        "config": { "triggerType": "Manual" },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "parse-intent",
+      "type": "action",
+      "position": { "x": 250, "y": 200 },
+      "data": {
+        "label": "Parse XMTP Intent",
+        "type": "action",
+        "config": {
+          "actionType": "xmtp/parse-payment-intent",
+          "messageBody": "{\"type\":\"payment\",\"amount\":500,\"token\":\"USDC\",\"chain\":\"optimism\",\"recipient\":\"0x1111111111111111111111111111111111111111\"}"
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "compute-allocation",
+      "type": "action",
+      "position": { "x": 500, "y": 200 },
+      "data": {
+        "label": "Compute Allocation",
+        "type": "action",
+        "config": {
+          "actionType": "code/run-code",
+          "code": "const amount = Number({{@parse-intent:Parse XMTP Intent.intent.amount}} || 0);\nconst liquidPct = 0.2;\nconst yieldPct = 0.3;\nconst convertPct = 0.5;\nconst liquid = Number((amount * liquidPct).toFixed(2));\nconst yieldAmount = Number((amount * yieldPct).toFixed(2));\nconst convert = Number((amount * convertPct).toFixed(2));\nreturn {\n  amount,\n  token: {{@parse-intent:Parse XMTP Intent.intent.token}} || \"USDC\",\n  chain: {{@parse-intent:Parse XMTP Intent.intent.chain}} || \"optimism\",\n  recipient: {{@parse-intent:Parse XMTP Intent.intent.recipient}} || \"\",\n  allocation: { liquid, yield: yieldAmount, convert }\n};"
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "convert-positive",
+      "type": "action",
+      "position": { "x": 750, "y": 200 },
+      "data": {
+        "label": "Convert Bucket > 0",
+        "type": "action",
+        "config": {
+          "actionType": "Condition",
+          "condition": "{{@compute-allocation:Compute Allocation.result.allocation.convert}} > 0",
+          "conditionConfig": {
+            "group": {
+              "id": "convert-bucket-check",
+              "logic": "AND",
+              "rules": [
+                {
+                  "id": "convert-bucket-rule",
+                  "operator": ">",
+                  "leftOperand": "{{@compute-allocation:Compute Allocation.result.allocation.convert}}",
+                  "rightOperand": "0"
+                }
+              ]
+            }
+          }
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "persona-check",
+      "type": "action",
+      "position": { "x": 1000, "y": 120 },
+      "data": {
+        "label": "Persona Check Status",
+        "type": "action",
+        "config": {
+          "actionType": "persona/check-verification-status",
+          "referenceId": "flowwage-demo-user"
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "persona-approved",
+      "type": "action",
+      "position": { "x": 1250, "y": 120 },
+      "data": {
+        "label": "Persona Approved?",
+        "type": "action",
+        "config": {
+          "actionType": "Condition",
+          "condition": "{{@persona-check:Persona Check Status.status}} == \"approved\"",
+          "conditionConfig": {
+            "group": {
+              "id": "persona-approved-check",
+              "logic": "AND",
+              "rules": [
+                {
+                  "id": "persona-approved-rule",
+                  "operator": "=",
+                  "leftOperand": "{{@persona-check:Persona Check Status.status}}",
+                  "rightOperand": "approved"
+                }
+              ]
+            }
+          }
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "offramp-convert",
+      "type": "action",
+      "position": { "x": 1500, "y": 20 },
+      "data": {
+        "label": "Trigger Offramp Conversion",
+        "type": "action",
+        "config": {
+          "actionType": "offramp/trigger-conversion",
+          "provider": "onramper",
+          "networkMode": "testnet",
+          "fiatCurrency": "NGN",
+          "cryptoCurrency": "USDC",
+          "amount": "{{@compute-allocation:Compute Allocation.result.allocation.convert}}",
+          "network": "optimism",
+          "countryCode": "NG"
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "xmtp-receipt",
+      "type": "action",
+      "position": { "x": 1750, "y": 20 },
+      "data": {
+        "label": "Send XMTP Receipt",
+        "type": "action",
+        "config": {
+          "actionType": "xmtp/send-transaction-receipt",
+          "recipientAddress": "{{@compute-allocation:Compute Allocation.result.recipient}}",
+          "transactionHash": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "network": "op-sepolia",
+          "amount": "{{@compute-allocation:Compute Allocation.result.allocation.convert}}",
+          "token": "USDC",
+          "paymentIntentId": "intent-demo-001",
+          "xmtpEnv": "testnet"
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "persona-create",
+      "type": "action",
+      "position": { "x": 1500, "y": 220 },
+      "data": {
+        "label": "Create Persona Inquiry",
+        "type": "action",
+        "config": {
+          "actionType": "persona/create-inquiry",
+          "referenceId": "flowwage-demo-user",
+          "inquiryTemplateId": "itmpl_A41AqAmnmHDJ7Rm6Q3ur1BbnaEwwXe"
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "xmtp-kyc-link",
+      "type": "action",
+      "position": { "x": 1750, "y": 220 },
+      "data": {
+        "label": "Send KYC Link Over XMTP",
+        "type": "action",
+        "config": {
+          "actionType": "xmtp/send-message",
+          "recipientAddress": "{{@compute-allocation:Compute Allocation.result.recipient}}",
+          "message": "KYC required before off-ramp. Complete verification here: {{@persona-create:Create Persona Inquiry.inquiryUrl}}",
+          "xmtpEnv": "testnet"
+        },
+        "status": "idle"
+      }
+    },
+    {
+      "id": "skip-convert-notify",
+      "type": "action",
+      "position": { "x": 1000, "y": 340 },
+      "data": {
+        "label": "Skip Conversion Notification",
+        "type": "action",
+        "config": {
+          "actionType": "xmtp/send-message",
+          "recipientAddress": "{{@compute-allocation:Compute Allocation.result.recipient}}",
+          "message": "No conversion bucket this cycle. Funds retained for liquid/yield policy.",
+          "xmtpEnv": "testnet"
+        },
+        "status": "idle"
+      }
+    }
+  ],
+  "edges": [
+    { "id": "e1", "source": "trigger-1", "target": "parse-intent", "type": "animated" },
+    { "id": "e2", "source": "parse-intent", "target": "compute-allocation", "type": "animated" },
+    { "id": "e3", "source": "compute-allocation", "target": "convert-positive", "type": "animated" },
+    { "id": "e4", "source": "convert-positive", "target": "persona-check", "sourceHandle": "true", "type": "animated" },
+    { "id": "e5", "source": "convert-positive", "target": "skip-convert-notify", "sourceHandle": "false", "type": "animated" },
+    { "id": "e6", "source": "persona-check", "target": "persona-approved", "type": "animated" },
+    { "id": "e7", "source": "persona-approved", "target": "offramp-convert", "sourceHandle": "true", "type": "animated" },
+    { "id": "e8", "source": "offramp-convert", "target": "xmtp-receipt", "type": "animated" },
+    { "id": "e9", "source": "persona-approved", "target": "persona-create", "sourceHandle": "false", "type": "animated" },
+    { "id": "e10", "source": "persona-create", "target": "xmtp-kyc-link", "type": "animated" }
+  ],
+  "integrationBindings": []
+}

@@ -1,0 +1,310 @@
+{
+  "version": 1,
+  "exportedAt": "2026-05-03T00:00:00.000Z",
+  "workflow": {
+    "name": "FlowWage 01 - Income Sentinel",
+    "description": "Income detection from Sablier/Superfluid/Request Finance + balance snapshot + allocation threshold gate."
+  },
+  "nodes": [
+    {
+      "id": "trigger-1",
+      "type": "trigger",
+      "position": {
+        "x": 0,
+        "y": 200
+      },
+      "data": {
+        "label": "Manual Trigger",
+        "type": "trigger",
+        "config": {
+          "triggerType": "Manual"
+        }
+      }
+    },
+    {
+      "id": "sablier-sub",
+      "type": "action",
+      "position": {
+        "x": 250,
+        "y": 20
+      },
+      "data": {
+        "label": "Sablier Subscribe",
+        "type": "action",
+        "config": {
+          "actionType": "sablier/subscribe-to-stream-events",
+          "network": "11155420",
+          "lockupContractAddress": "0x0000000000000000000000000000000000000001",
+          "webhookUrl": "https://example.com/webhooks/sablier",
+          "walletAddress": "{{@trigger-1:Manual Trigger.walletAddress}}"
+        }
+      }
+    },
+    {
+      "id": "sablier-state",
+      "type": "action",
+      "position": {
+        "x": 500,
+        "y": 20
+      },
+      "data": {
+        "label": "Sablier Stream State",
+        "type": "action",
+        "config": {
+          "actionType": "sablier/get-stream-state",
+          "network": "11155420",
+          "lockupContractAddress": "0x0000000000000000000000000000000000000001",
+          "streamId": "1"
+        }
+      }
+    },
+    {
+      "id": "sablier-unlock",
+      "type": "action",
+      "position": {
+        "x": 750,
+        "y": 20
+      },
+      "data": {
+        "label": "Sablier Unlockable Snapshot",
+        "type": "action",
+        "config": {
+          "actionType": "code/run-code",
+          "code": "const state = {{@sablier-state:Sablier Stream State}};\nconst amount = Number(state?.unlockableAmount ?? state?.claimableAmount ?? 0);\nreturn { unlockableAmount: Number.isFinite(amount) ? amount : 0, source: 'sablier-state-snapshot' };"
+        }
+      }
+    },
+    {
+      "id": "sf-events",
+      "type": "action",
+      "position": {
+        "x": 250,
+        "y": 180
+      },
+      "data": {
+        "label": "Superfluid Events",
+        "type": "action",
+        "config": {
+          "actionType": "superfluid/get-stream-events",
+          "network": "11155420",
+          "walletAddress": "{{@trigger-1:Manual Trigger.walletAddress}}",
+          "limit": 20
+        }
+      }
+    },
+    {
+      "id": "sf-incoming",
+      "type": "action",
+      "position": {
+        "x": 500,
+        "y": 180
+      },
+      "data": {
+        "label": "Superfluid Incoming",
+        "type": "action",
+        "config": {
+          "actionType": "superfluid/get-incoming-streams",
+          "network": "11155420",
+          "walletAddress": "{{@trigger-1:Manual Trigger.walletAddress}}",
+          "limit": 20
+        }
+      }
+    },
+    {
+      "id": "sf-balance",
+      "type": "action",
+      "position": {
+        "x": 750,
+        "y": 180
+      },
+      "data": {
+        "label": "Superfluid Realtime Snapshot",
+        "type": "action",
+        "config": {
+          "actionType": "code/run-code",
+          "code": "const incoming = {{@sf-incoming:Superfluid Incoming}};\nconst streams = Array.isArray(incoming?.streams) ? incoming.streams : [];\nconst aggregateFlowRate = streams.reduce((sum, s) => sum + Number(s?.flowRate ?? 0), 0);\nreturn { activeStreamCount: streams.length, aggregateFlowRate };"
+        }
+      }
+    },
+    {
+      "id": "rf-sub",
+      "type": "action",
+      "position": {
+        "x": 250,
+        "y": 340
+      },
+      "data": {
+        "label": "Request Subscribe",
+        "type": "action",
+        "config": {
+          "actionType": "request-finance/subscribe-invoice-events",
+          "webhookUrl": "https://example.com/webhooks/request-finance",
+          "walletAddress": "{{@trigger-1:Manual Trigger.walletAddress}}",
+          "eventTypes": "create,paid"
+        }
+      }
+    },
+    {
+      "id": "rf-history",
+      "type": "action",
+      "position": {
+        "x": 500,
+        "y": 340
+      },
+      "data": {
+        "label": "Request Payment History",
+        "type": "action",
+        "config": {
+          "actionType": "request-finance/get-payment-history",
+          "take": "10",
+          "skip": "0"
+        }
+      }
+    },
+    {
+      "id": "web3-balance",
+      "type": "action",
+      "position": {
+        "x": 750,
+        "y": 340
+      },
+      "data": {
+        "label": "USDC Balance",
+        "type": "action",
+        "config": {
+          "actionType": "web3/check-token-balance",
+          "network": "11155420",
+          "address": "{{@trigger-1:Manual Trigger.walletAddress}}",
+          "tokenConfig": "{\"mode\":\"custom\",\"customToken\":{\"address\":\"0x5fd84259d66cd46123540766be93dfe6d43130d7\",\"symbol\":\"USDC\"}}"
+        }
+      }
+    },
+    {
+      "id": "alloc",
+      "type": "action",
+      "position": {
+        "x": 1020,
+        "y": 220
+      },
+      "data": {
+        "label": "Compute Allocation",
+        "type": "action",
+        "config": {
+          "actionType": "code/run-code",
+          "code": "const income = Number(({{@trigger-1:Manual Trigger.amount}} ?? 0));\nconst liquidPct = Number({{@trigger-1:Manual Trigger.liquidPercent}} ?? 30);\nconst yieldPct = Number({{@trigger-1:Manual Trigger.yieldPercent}} ?? 40);\nconst convertPct = Number({{@trigger-1:Manual Trigger.convertPercent}} ?? 30);\nconst minTrigger = Number({{@trigger-1:Manual Trigger.minIncomeTriggerUsd}} ?? 50);\nif (liquidPct + yieldPct + convertPct !== 100) throw new Error('Allocation percent must sum to 100');\nconst liquid = Number((income * liquidPct / 100).toFixed(2));\nconst yieldAmt = Number((income * yieldPct / 100).toFixed(2));\nconst convert = Number((income * convertPct / 100).toFixed(2));\nreturn { income, minTrigger, liquidPct, yieldPct, convertPct, liquid, yield: yieldAmt, convert, thresholdMet: income >= minTrigger };"
+        }
+      }
+    },
+    {
+      "id": "threshold",
+      "type": "action",
+      "position": {
+        "x": 1260,
+        "y": 220
+      },
+      "data": {
+        "label": "Income Threshold Met",
+        "type": "action",
+        "config": {
+          "actionType": "Condition",
+          "condition": "{{@alloc:Compute Allocation.result.thresholdMet}} == true",
+          "conditionConfig": {
+            "group": {
+              "id": "threshold",
+              "logic": "AND",
+              "rules": [
+                {
+                  "id": "threshold-rule",
+                  "operator": "=",
+                  "leftOperand": "{{@alloc:Compute Allocation.result.thresholdMet}}",
+                  "rightOperand": "true"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "trigger-1",
+      "target": "sablier-sub",
+      "type": "animated"
+    },
+    {
+      "id": "e2",
+      "source": "sablier-sub",
+      "target": "sablier-state",
+      "type": "animated"
+    },
+    {
+      "id": "e3",
+      "source": "sablier-state",
+      "target": "sablier-unlock",
+      "type": "animated"
+    },
+    {
+      "id": "e4",
+      "source": "trigger-1",
+      "target": "sf-events",
+      "type": "animated"
+    },
+    {
+      "id": "e5",
+      "source": "sf-events",
+      "target": "sf-incoming",
+      "type": "animated"
+    },
+    {
+      "id": "e6",
+      "source": "sf-incoming",
+      "target": "sf-balance",
+      "type": "animated"
+    },
+    {
+      "id": "e7",
+      "source": "trigger-1",
+      "target": "rf-sub",
+      "type": "animated"
+    },
+    {
+      "id": "e8",
+      "source": "rf-sub",
+      "target": "rf-history",
+      "type": "animated"
+    },
+    {
+      "id": "e9",
+      "source": "rf-history",
+      "target": "web3-balance",
+      "type": "animated"
+    },
+    {
+      "id": "e10",
+      "source": "sablier-unlock",
+      "target": "alloc",
+      "type": "animated"
+    },
+    {
+      "id": "e11",
+      "source": "sf-balance",
+      "target": "alloc",
+      "type": "animated"
+    },
+    {
+      "id": "e12",
+      "source": "web3-balance",
+      "target": "alloc",
+      "type": "animated"
+    },
+    {
+      "id": "e13",
+      "source": "alloc",
+      "target": "threshold",
+      "type": "animated"
+    }
+  ],
+  "integrationBindings": []
+}

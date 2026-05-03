@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "exportedAt": "2026-05-03T00:00:00.000Z",
+  "workflow": {
+    "name": "FlowWage 03 - Deferred Resume (KYC/Rate)",
+    "description": "Resume deferred conversion bucket after Persona webhook/scheduled recheck."
+  },
+  "nodes": [
+    { "id": "trigger-1", "type": "trigger", "position": { "x": 0, "y": 160 }, "data": { "label": "Schedule Trigger", "type": "trigger", "config": { "triggerType": "Schedule", "scheduleCron": "0 */6 * * *", "scheduleTimezone": "UTC" } } },
+    { "id": "persona-status", "type": "action", "position": { "x": 260, "y": 160 }, "data": { "label": "Persona Status", "type": "action", "config": { "actionType": "persona/check-verification-status", "referenceId": "flowwage-user-003" } } },
+    { "id": "persona-corridors", "type": "action", "position": { "x": 500, "y": 160 }, "data": { "label": "Persona Corridors", "type": "action", "config": { "actionType": "persona/get-cleared-corridors", "referenceId": "flowwage-user-003" } } },
+    { "id": "persona-limits", "type": "action", "position": { "x": 740, "y": 160 }, "data": { "label": "Persona Limits", "type": "action", "config": { "actionType": "persona/get-transaction-limits", "referenceId": "flowwage-user-003" } } },
+    { "id": "approved", "type": "action", "position": { "x": 980, "y": 160 }, "data": { "label": "Approved?", "type": "action", "config": { "actionType": "Condition", "condition": "{{@persona-status:Persona Status.status}} == \"approved\"", "conditionConfig": { "group": { "id": "approved", "logic": "AND", "rules": [ { "id": "approved-rule", "operator": "=", "leftOperand": "{{@persona-status:Persona Status.status}}", "rightOperand": "approved" } ] } } } } },
+    { "id": "quote", "type": "action", "position": { "x": 1220, "y": 80 }, "data": { "label": "Offramp Quote", "type": "action", "config": { "actionType": "offramp/get-best-quote", "providerMode": "auto", "networkMode": "testnet", "fiatCurrency": "NGN", "cryptoCurrency": "USDC", "amount": "100", "countryCode": "NG", "network": "optimism" } } },
+    { "id": "rate", "type": "action", "position": { "x": 1460, "y": 80 }, "data": { "label": "Rate History", "type": "action", "config": { "actionType": "offramp/get-rate-history", "cryptoCurrency": "USDC", "fiatCurrency": "NGN", "days": "7" } } },
+    { "id": "go-now", "type": "action", "position": { "x": 1700, "y": 80 }, "data": { "label": "Execute Now?", "type": "action", "config": { "actionType": "Condition", "condition": "true == true", "conditionConfig": { "group": { "id": "go", "logic": "AND", "rules": [ { "id": "go-rule", "operator": "=", "leftOperand": "true", "rightOperand": "true" } ] } } } } },
+    { "id": "convert", "type": "action", "position": { "x": 1940, "y": 80 }, "data": { "label": "Trigger Conversion", "type": "action", "config": { "actionType": "offramp/trigger-conversion", "provider": "onramper", "networkMode": "testnet", "fiatCurrency": "NGN", "cryptoCurrency": "USDC", "amount": "100", "network": "optimism", "countryCode": "NG" } } },
+    { "id": "status", "type": "action", "position": { "x": 2180, "y": 80 }, "data": { "label": "Conversion Status", "type": "action", "config": { "actionType": "offramp/get-conversion-status", "provider": "onramper", "conversionReference": "{{@convert:Trigger Conversion.conversionReference}}" } } },
+    { "id": "xmtp-receipt", "type": "action", "position": { "x": 2420, "y": 80 }, "data": { "label": "Send Resume Receipt", "type": "action", "config": { "actionType": "xmtp/send-message", "recipientAddress": "0x1111111111111111111111111111111111111111", "message": "Deferred conversion resumed. Status={{@status:Conversion Status.status}}" } } },
+    { "id": "notify-wait", "type": "action", "position": { "x": 1220, "y": 260 }, "data": { "label": "Still Pending KYC", "type": "action", "config": { "actionType": "xmtp/send-message", "recipientAddress": "0x1111111111111111111111111111111111111111", "message": "KYC still pending. Deferred conversion remains queued." } } }
+  ],
+  "edges": [
+    { "id": "e1", "source": "trigger-1", "target": "persona-status", "type": "animated" },
+    { "id": "e2", "source": "persona-status", "target": "persona-corridors", "type": "animated" },
+    { "id": "e3", "source": "persona-corridors", "target": "persona-limits", "type": "animated" },
+    { "id": "e4", "source": "persona-limits", "target": "approved", "type": "animated" },
+    { "id": "e5", "source": "approved", "target": "quote", "sourceHandle": "true", "type": "animated" },
+    { "id": "e6", "source": "quote", "target": "rate", "type": "animated" },
+    { "id": "e7", "source": "rate", "target": "go-now", "type": "animated" },
+    { "id": "e8", "source": "go-now", "target": "convert", "sourceHandle": "true", "type": "animated" },
+    { "id": "e9", "source": "convert", "target": "status", "type": "animated" },
+    { "id": "e10", "source": "status", "target": "xmtp-receipt", "type": "animated" },
+    { "id": "e11", "source": "approved", "target": "notify-wait", "sourceHandle": "false", "type": "animated" }
+  ],
+  "integrationBindings": []
+}
