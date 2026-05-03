@@ -1,0 +1,332 @@
+=== PART-01-INCOME-SENTINEL ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_01_INCOME_SENTINEL.workflow.json
+workflow_id=gp9jn233820fnd9fwtvfj
+execution_id=3b565rtfqq492wz1djops
+status=running
+status=error
+{
+  "status": "error",
+  "nodeStatuses": [
+    {
+      "nodeId": "sf-balance",
+      "status": "error"
+    },
+    {
+      "nodeId": "sf-incoming",
+      "status": "success"
+    },
+    {
+      "nodeId": "web3-balance",
+      "status": "error"
+    },
+    {
+      "nodeId": "sablier-unlock",
+      "status": "error"
+    },
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "rf-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "rf-history",
+      "status": "success"
+    },
+    {
+      "nodeId": "sablier-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "sf-events",
+      "status": "success"
+    },
+    {
+      "nodeId": "sablier-state",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 8,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": {
+    "failedNodeId": null,
+    "lastSuccessfulNodeId": "sf-incoming",
+    "lastSuccessfulNodeName": "Superfluid Incoming",
+    "executionTrace": [
+      "trigger-1",
+      "rf-sub",
+      "rf-history",
+      "sablier-sub",
+      "sf-events",
+      "web3-balance",
+      "sablier-unlock",
+      "sf-balance"
+    ],
+    "error": "Failed to check token balance: could not decode result data (value=\"0x\", info={ \"method\": \"balanceOf\", \"signature\": \"balanceOf(address)\" }, code=BAD_DATA, version=6.16.0)"
+  }
+}
+=== PART-02-XMTP-INBOX-TRIGGER ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_05_XMTP_INBOX_TRIGGER.workflow.json
+workflow_id=sjjlvf5ci8mqv89cxvs8u
+execution_id=9hmk3xwpc56ro8js2tey5
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=error
+{
+  "status": "error",
+  "nodeStatuses": [
+    {
+      "nodeId": "xmtp-sub",
+      "status": "error"
+    },
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 2,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": {
+    "failedNodeId": null,
+    "lastSuccessfulNodeId": "trigger-1",
+    "lastSuccessfulNodeName": "Manual Trigger",
+    "executionTrace": [
+      "trigger-1",
+      "xmtp-sub"
+    ],
+    "error": "Failed to initialize XMTP listener context: Pool error: timed out waiting for connection: Unable to open the database file"
+  }
+}
+=== PART-03-EXECUTION-GATE ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_02_EXECUTION_GATE.workflow.json
+workflow_id=dvd0oc2a4jw6onct4cfu6
+execution_id=vcyz08umwn3vly9kw4g9i
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=error
+{
+  "status": "error",
+  "nodeStatuses": [
+    {
+      "nodeId": "alloc",
+      "status": "success"
+    },
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-parse",
+      "status": "success"
+    },
+    {
+      "nodeId": "convert-check",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-approved",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-status",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-corridors",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-kyc",
+      "status": "error"
+    },
+    {
+      "nodeId": "persona-limits",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-webhook-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-create",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 11,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": {
+    "failedNodeId": null,
+    "lastSuccessfulNodeId": "persona-create",
+    "lastSuccessfulNodeName": "Create Persona Inquiry",
+    "executionTrace": [
+      "trigger-1",
+      "xmtp-parse",
+      "alloc",
+      "convert-check",
+      "persona-status",
+      "persona-corridors",
+      "persona-limits",
+      "persona-webhook-sub",
+      "persona-approved",
+      "persona-create",
+      "xmtp-kyc"
+    ],
+    "error": "Failed to send XMTP message: Pool error: timed out waiting for connection: Unable to open the database file"
+  }
+}
+=== PART-04-DEFERRED-RESUME ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_03_DEFERRED_RESUME.workflow.json
+workflow_id=e9itb7dn2kxfz8d02e71g
+execution_id=t6wd7r9hthbkax1a7h71i
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=error
+{
+  "status": "error",
+  "nodeStatuses": [
+    {
+      "nodeId": "persona-limits",
+      "status": "success"
+    },
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-status",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-corridors",
+      "status": "success"
+    },
+    {
+      "nodeId": "approved",
+      "status": "success"
+    },
+    {
+      "nodeId": "notify-wait",
+      "status": "error"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 6,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": {
+    "failedNodeId": null,
+    "lastSuccessfulNodeId": "approved",
+    "lastSuccessfulNodeName": "Approved?",
+    "executionTrace": [
+      "trigger-1",
+      "persona-status",
+      "persona-corridors",
+      "persona-limits",
+      "approved",
+      "notify-wait"
+    ],
+    "error": "Failed to send XMTP message: Pool error: timed out waiting for connection: Unable to open the database file"
+  }
+}
+=== PART-05-WEEKLY-REBALANCER ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_04_WEEKLY_REBALANCER.workflow.json
+workflow_id=v6ccimnfihlsfsl5rrrw3
+execution_id=4k78leysz2aq3b22x6n6i
+status=error
+{
+  "status": "error",
+  "nodeStatuses": [
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "balance",
+      "status": "error"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 2,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": {
+    "failedNodeId": null,
+    "lastSuccessfulNodeId": "trigger-1",
+    "lastSuccessfulNodeName": "Weekly Schedule",
+    "executionTrace": [
+      "trigger-1",
+      "balance"
+    ],
+    "error": "Failed to check token balance: could not decode result data (value=\"0x\", info={ \"method\": \"balanceOf\", \"signature\": \"balanceOf(address)\" }, code=BAD_DATA, version=6.16.0)"
+  }
+}
+SUITE_LOG=/Users/sam/FlowWage/flowwage_workflow/logs/full-flow-suite-20260503-125005.log

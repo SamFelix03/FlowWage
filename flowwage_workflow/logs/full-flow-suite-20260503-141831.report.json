@@ -1,0 +1,1957 @@
+[
+  {
+    "part": "PART-01-INCOME-SENTINEL",
+    "workflowId": "ri22z823aaw2y0gk3664m",
+    "executionId": "p7nltxgmtqtyokhao03r3",
+    "status": "success",
+    "txHashes": [],
+    "xmtpMessageIds": [],
+    "xmtpConversationIds": [],
+    "conversionReferences": [],
+    "transferProof": [],
+    "nodeOutputs": [
+      {
+        "nodeId": "threshold",
+        "nodeName": "Income Threshold Met",
+        "status": "success",
+        "output": {
+          "condition": true
+        }
+      },
+      {
+        "nodeId": "alloc",
+        "nodeName": "Compute Allocation",
+        "status": "success",
+        "output": {
+          "logs": [],
+          "result": {
+            "yield": 200,
+            "income": 500,
+            "liquid": 150,
+            "convert": 150,
+            "yieldPct": 40,
+            "liquidPct": 30,
+            "convertPct": 30,
+            "minTrigger": 50,
+            "thresholdMet": true
+          },
+          "success": true
+        }
+      },
+      {
+        "nodeId": "sablier-unlock",
+        "nodeName": "Sablier Unlockable Snapshot",
+        "status": "success",
+        "output": {
+          "logs": [],
+          "result": {
+            "source": "sablier-state-snapshot",
+            "unlockableAmount": 0
+          },
+          "success": true
+        }
+      },
+      {
+        "nodeId": "sf-balance",
+        "nodeName": "Superfluid Realtime Snapshot",
+        "status": "success",
+        "output": {
+          "logs": [],
+          "result": {
+            "activeStreamCount": 0,
+            "aggregateFlowRate": 0
+          },
+          "success": true
+        }
+      },
+      {
+        "nodeId": "sf-incoming",
+        "nodeName": "Superfluid Incoming",
+        "status": "success",
+        "output": {
+          "count": 0,
+          "streams": [],
+          "success": true,
+          "totalFlowRate": "0"
+        }
+      },
+      {
+        "nodeId": "sablier-state",
+        "nodeName": "Sablier Stream State",
+        "status": "success",
+        "output": {
+          "success": true,
+          "streamId": "1"
+        }
+      },
+      {
+        "nodeId": "web3-balance",
+        "nodeName": "USDC Balance",
+        "status": "success",
+        "output": {
+          "address": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C",
+          "balance": {
+            "name": "USDC",
+            "symbol": "USDC",
+            "balance": "20.0",
+            "decimals": 6,
+            "balanceRaw": "20000000",
+            "tokenAddress": "0x5fd84259d66cd46123540766be93dfe6d43130d7"
+          },
+          "success": true,
+          "addressLink": "https://sepolia-optimism.etherscan.io/address/0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C"
+        }
+      },
+      {
+        "nodeId": "rf-history",
+        "nodeName": "Request Payment History",
+        "status": "success",
+        "output": {
+          "raw": {
+            "count": 0,
+            "result": []
+          },
+          "count": 0,
+          "success": true,
+          "invoices": [],
+          "statuses": {}
+        }
+      },
+      {
+        "nodeId": "sablier-sub",
+        "nodeName": "Sablier Subscribe",
+        "status": "success",
+        "output": {
+          "notes": "Use this subscription payload with a webhook relay worker that polls Sablier events and POSTs to webhookUrl.",
+          "success": true,
+          "subscription": {
+            "chainId": 11155420,
+            "network": "11155420",
+            "provider": "sablier",
+            "fromBlock": 42997786,
+            "eventTypes": [
+              "create",
+              "withdraw",
+              "cancel"
+            ],
+            "webhookUrl": "https://example.com/webhooks/sablier",
+            "walletAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C",
+            "pollIntervalSeconds": 30,
+            "lockupContractAddress": "0x0000000000000000000000000000000000000001"
+          }
+        }
+      },
+      {
+        "nodeId": "sf-events",
+        "nodeName": "Superfluid Events",
+        "status": "success",
+        "output": {
+          "count": 0,
+          "events": [],
+          "success": true
+        }
+      },
+      {
+        "nodeId": "rf-sub",
+        "nodeName": "Request Subscribe",
+        "status": "success",
+        "output": {
+          "notes": "Configure webhook URL and secret in Request Finance dashboard > Settings > Developer > Apps. Then verify X-Webhook-Signature in your webhook handler.",
+          "success": true,
+          "subscription": {
+            "variant": "rnf_invoice",
+            "provider": "request-finance",
+            "eventTypes": [
+              "create",
+              "paid"
+            ],
+            "webhookUrl": "https://example.com/webhooks/request-finance",
+            "walletAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C",
+            "pollIntervalSeconds": 30
+          }
+        }
+      },
+      {
+        "nodeId": "trigger-1",
+        "nodeName": "Manual Trigger",
+        "status": "success",
+        "output": {
+          "data": {
+            "amount": 500,
+            "timestamp": 1777798111560,
+            "triggered": true,
+            "triggeredAt": "2026-05-03T08:48:31.560Z",
+            "yieldPercent": 40,
+            "liquidPercent": 30,
+            "walletAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C",
+            "convertPercent": 30,
+            "minIncomeTriggerUsd": 50
+          },
+          "success": true
+        }
+      }
+    ]
+  },
+  {
+    "part": "PART-02-XMTP-INBOX-TRIGGER",
+    "workflowId": "v5vu4j27j1ak4czvyg6u4",
+    "executionId": "b8iz27ieohb82p2clsnl5",
+    "status": "success",
+    "txHashes": [],
+    "xmtpMessageIds": [],
+    "xmtpConversationIds": [
+      "debcd4c0c0bd07e3b682552ee63f332a"
+    ],
+    "conversionReferences": [],
+    "transferProof": [],
+    "nodeOutputs": [
+      {
+        "nodeId": "xmtp-ack",
+        "nodeName": "Send XMTP Ack",
+        "status": "success",
+        "output": {
+          "env": "dev",
+          "success": true,
+          "senderAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C",
+          "conversationId": "debcd4c0c0bd07e3b682552ee63f332a",
+          "recipientAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C"
+        }
+      },
+      {
+        "nodeId": "xmtp-parse",
+        "nodeName": "Parse Payment Intent",
+        "status": "success",
+        "output": {
+          "raw": {
+            "type": "payment",
+            "chain": "op-sepolia",
+            "token": "****",
+            "amount": 500,
+            "recipient": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C"
+          },
+          "intent": {
+            "type": "payment",
+            "chain": "op-sepolia",
+            "token": "****",
+            "amount": 500,
+            "recipient": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C"
+          },
+          "isValid": true,
+          "success": true
+        }
+      },
+      {
+        "nodeId": "xmtp-sub",
+        "nodeName": "XMTP Subscribe Inbox",
+        "status": "success",
+        "output": {
+          "notes": "Use this subscription payload with a long-lived worker that streams XMTP inbox messages and POSTs matching payment intents to webhookUrl.",
+          "success": true,
+          "subscription": {
+            "env": "dev",
+            "provider": "xmtp",
+            "webhookUrl": "https://example.com/webhooks/xmtp",
+            "senderAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C",
+            "whitelistSenders": [
+              "0x1111111111111111111111111111111111111111"
+            ],
+            "pollIntervalSeconds": 30
+          }
+        }
+      },
+      {
+        "nodeId": "trigger-1",
+        "nodeName": "Manual Trigger",
+        "status": "success",
+        "output": {
+          "data": {
+            "amount": 500,
+            "timestamp": 1777798114493,
+            "triggered": true,
+            "triggeredAt": "2026-05-03T08:48:34.493Z",
+            "yieldPercent": 40,
+            "liquidPercent": 30,
+            "walletAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C",
+            "convertPercent": 30,
+            "minIncomeTriggerUsd": 50
+          },
+          "success": true
+        }
+      }
+    ]
+  },
+  {
+    "part": "PART-03-EXECUTION-GATE",
+    "workflowId": "f43s59ngev0sczagu9kao",
+    "executionId": "fd8mjhqycr6sttjv7dvug",
+    "status": "success",
+    "txHashes": [],
+    "xmtpMessageIds": [],
+    "xmtpConversationIds": [
+      "debcd4c0c0bd07e3b682552ee63f332a"
+    ],
+    "conversionReferences": [],
+    "transferProof": [],
+    "nodeOutputs": [
+      {
+        "nodeId": "xmtp-kyc",
+        "nodeName": "Send KYC Link",
+        "status": "success",
+        "output": {
+          "env": "dev",
+          "success": true,
+          "senderAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C",
+          "conversationId": "debcd4c0c0bd07e3b682552ee63f332a",
+          "recipientAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C"
+        }
+      },
+      {
+        "nodeId": "persona-create",
+        "nodeName": "Create Persona Inquiry",
+        "status": "success",
+        "output": {
+          "raw": {
+            "data": {
+              "id": "inq_A41AqAmhQjLk1UYSK1JEGFUYqMpzMD",
+              "type": "inquiry",
+              "attributes": {
+                "note": null,
+                "tags": [],
+                "fields": {
+                  "birthdate": {
+                    "type": "date",
+                    "value": null
+                  },
+                  "name_last": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "issue_date": {
+                    "type": "date",
+                    "value": null
+                  },
+                  "name_first": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "name_middle": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "address_city": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "phone_number": "******TED]",
+                  "email_address": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "current_selfie": {
+                    "type": "selfie",
+                    "value": null
+                  },
+                  "expiration_date": {
+                    "type": "date",
+                    "value": null
+                  },
+                  "address_street_1": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "address_street_2": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "issuing_authority": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "selected_id_class": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "card_access_number": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "address_postal_code": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "address_subdivision": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "address_country_code": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "identification_class": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "current_government_id": {
+                    "type": "government_id",
+                    "value": null
+                  },
+                  "identification_number": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "selected_country_code": {
+                    "type": "string",
+                    "value": "US"
+                  },
+                  "hashed_identification_number": {
+                    "type": "string",
+                    "value": null
+                  },
+                  "government_identification_number_map": {
+                    "type": "json",
+                    "value": null
+                  }
+                },
+                "status": "created",
+                "creator": "API",
+                "behaviors": {
+                  "bot-score": null,
+                  "devtools-open": null,
+                  "autofill-starts": null,
+                  "completion-time": null,
+                  "hesitation-time": null,
+                  "shortcut-copies": null,
+                  "shortcut-pastes": null,
+                  "autofill-cancels": null,
+                  "hesitation-count": null,
+                  "debugger-attached": null,
+                  "distraction-events": null,
+                  "hesitation-baseline": null,
+                  "behavior-threat-level": null,
+                  "hesitation-percentage": null,
+                  "request-spoof-attempts": null,
+                  "user-agent-spoof-attempts": null,
+                  "api-version-less-than-minimum-count": null,
+                  "mobile-sdk-version-less-than-minimum-count": null
+                },
+                "failed-at": null,
+                "created-at": "2026-05-03T08:48:47.000Z",
+                "expired-at": null,
+                "expires-at": "2026-05-04T08:48:47.000Z",
+                "started-at": null,
+                "updated-at": "2026-05-03T08:48:47.000Z",
+                "redacted-at": null,
+                "completed-at": null,
+                "reference-id": "flowwage-user-003",
+                "decisioned-at": null,
+                "next-step-name": "start_biometric_af066d_start",
+                "reviewer-comment": null,
+                "previous-step-name": null,
+                "marked-for-review-at": null
+              },
+              "relationships": {
+                "account": {
+                  "data": {
+                    "id": "act_A41AqAmuwqgUAqGJwACzUb5UFAUWqK",
+                    "type": "account"
+                  }
+                },
+                "reports": {
+                  "data": []
+                },
+                "selfies": {
+                  "data": []
+                },
+                "reviewer": {
+                  "data": null
+                },
+                "sessions": {
+                  "data": []
+                },
+                "template": {
+                  "data": null
+                },
+                "documents": {
+                  "data": []
+                },
+                "transaction": {
+                  "data": null
+                },
+                "verifications": {
+                  "data": []
+                },
+                "inquiry-template": {
+                  "data": {
+                    "id": "itmpl_A41AqAmnmHDJ7Rm6Q3ur1BbnaEwwXe",
+                    "type": "inquiry-template"
+                  }
+                },
+                "inquiry-template-version": {
+                  "data": {
+                    "id": "itmplv_A41AqAmbJzn5GxodxH3Kww5LRTC8QJ",
+                    "type": "inquiry-template-version"
+                  }
+                }
+              }
+            },
+            "meta": {
+              "one-time-link": null,
+              "session-token": "******TED]",
+              "one-time-link-short": null
+            }
+          },
+          "success": true,
+          "inquiryId": "inq_A41AqAmhQjLk1UYSK1JEGFUYqMpzMD",
+          "referenceId": "flowwage-user-003"
+        }
+      },
+      {
+        "nodeId": "persona-approved",
+        "nodeName": "Persona Approved?",
+        "status": "success",
+        "output": {
+          "condition": false
+        }
+      },
+      {
+        "nodeId": "persona-webhook-sub",
+        "nodeName": "Persona Webhook Sub",
+        "status": "success",
+        "output": {
+          "notes": "Configure webhook signing in Persona dashboard and verify HMAC-SHA256 signatures in your webhook handler before processing events.",
+          "success": true,
+          "subscription": {
+            "provider": "persona",
+            "eventTypes": [
+              "inquiry.completed",
+              "inquiry.approved"
+            ],
+            "webhookUrl": "https://example.com/webhooks/persona"
+          }
+        }
+      },
+      {
+        "nodeId": "persona-limits",
+        "nodeName": "Persona Limits",
+        "status": "success",
+        "output": {
+          "raw": {
+            "data": [
+              {
+                "id": "inq_A41AqAmHNbjPhMoD7czG81xG4VA5fx",
+                "type": "inquiry",
+                "attributes": {
+                  "note": null,
+                  "tags": [],
+                  "fields": {
+                    "birthdate": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "name_last": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "issue_date": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "name_first": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "name_middle": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_city": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "phone_number": "******TED]",
+                    "email_address": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "current_selfie": {
+                      "type": "selfie",
+                      "value": null
+                    },
+                    "expiration_date": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "address_street_1": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_street_2": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "issuing_authority": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "selected_id_class": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "card_access_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_postal_code": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_subdivision": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_country_code": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "identification_class": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "current_government_id": {
+                      "type": "government_id",
+                      "value": null
+                    },
+                    "identification_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "selected_country_code": {
+                      "type": "string",
+                      "value": "US"
+                    },
+                    "hashed_identification_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "government_identification_number_map": {
+                      "type": "json",
+                      "value": null
+                    }
+                  },
+                  "status": "created",
+                  "creator": "API",
+                  "behaviors": {
+                    "bot-score": null,
+                    "devtools-open": null,
+                    "autofill-starts": null,
+                    "completion-time": null,
+                    "hesitation-time": null,
+                    "shortcut-copies": null,
+                    "shortcut-pastes": null,
+                    "autofill-cancels": null,
+                    "hesitation-count": null,
+                    "debugger-attached": null,
+                    "distraction-events": null,
+                    "hesitation-baseline": null,
+                    "behavior-threat-level": null,
+                    "hesitation-percentage": null,
+                    "request-spoof-attempts": null,
+                    "user-agent-spoof-attempts": null,
+                    "api-version-less-than-minimum-count": null,
+                    "mobile-sdk-version-less-than-minimum-count": null
+                  },
+                  "failed-at": null,
+                  "created-at": "2026-05-03T08:17:07.000Z",
+                  "expired-at": null,
+                  "expires-at": "2026-05-04T08:17:07.000Z",
+                  "started-at": null,
+                  "updated-at": "2026-05-03T08:17:07.000Z",
+                  "redacted-at": null,
+                  "completed-at": null,
+                  "reference-id": "flowwage-user-003",
+                  "decisioned-at": null,
+                  "next-step-name": "start_biometric_af066d_start",
+                  "reviewer-comment": null,
+                  "previous-step-name": null,
+                  "marked-for-review-at": null
+                },
+                "relationships": {
+                  "account": {
+                    "data": {
+                      "id": "act_A41AqAmuwqgUAqGJwACzUb5UFAUWqK",
+                      "type": "account"
+                    }
+                  },
+                  "reports": {
+                    "data": []
+                  },
+                  "selfies": {
+                    "data": []
+                  },
+                  "reviewer": {
+                    "data": null
+                  },
+                  "sessions": {
+                    "data": []
+                  },
+                  "template": {
+                    "data": null
+                  },
+                  "documents": {
+                    "data": []
+                  },
+                  "transaction": {
+                    "data": null
+                  },
+                  "verifications": {
+                    "data": []
+                  },
+                  "inquiry-template": {
+                    "data": {
+                      "id": "itmpl_A41AqAmnmHDJ7Rm6Q3ur1BbnaEwwXe",
+                      "type": "inquiry-template"
+                    }
+                  },
+                  "inquiry-template-version": {
+                    "data": {
+                      "id": "itmplv_A41AqAmbJzn5GxodxH3Kww5LRTC8QJ",
+                      "type": "inquiry-template-version"
+                    }
+                  }
+                }
+              }
+            ],
+            "links": {
+              "next": "/api/v1/inquiries?filter%5Breference-id%5D=flowwage-user-003&page%5Bafter%5D=inq_A41AqAmHNbjPhMoD7czG81xG4VA5fx&page%5Bsize%5D=1",
+              "prev": null
+            }
+          },
+          "tier": "unknown",
+          "limits": {},
+          "status": "pending",
+          "success": true
+        }
+      },
+      {
+        "nodeId": "persona-corridors",
+        "nodeName": "Persona Corridors",
+        "status": "success",
+        "output": {
+          "raw": {
+            "data": [
+              {
+                "id": "inq_A41AqAmHNbjPhMoD7czG81xG4VA5fx",
+                "type": "inquiry",
+                "attributes": {
+                  "note": null,
+                  "tags": [],
+                  "fields": {
+                    "birthdate": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "name_last": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "issue_date": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "name_first": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "name_middle": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_city": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "phone_number": "******TED]",
+                    "email_address": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "current_selfie": {
+                      "type": "selfie",
+                      "value": null
+                    },
+                    "expiration_date": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "address_street_1": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_street_2": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "issuing_authority": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "selected_id_class": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "card_access_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_postal_code": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_subdivision": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_country_code": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "identification_class": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "current_government_id": {
+                      "type": "government_id",
+                      "value": null
+                    },
+                    "identification_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "selected_country_code": {
+                      "type": "string",
+                      "value": "US"
+                    },
+                    "hashed_identification_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "government_identification_number_map": {
+                      "type": "json",
+                      "value": null
+                    }
+                  },
+                  "status": "created",
+                  "creator": "API",
+                  "behaviors": {
+                    "bot-score": null,
+                    "devtools-open": null,
+                    "autofill-starts": null,
+                    "completion-time": null,
+                    "hesitation-time": null,
+                    "shortcut-copies": null,
+                    "shortcut-pastes": null,
+                    "autofill-cancels": null,
+                    "hesitation-count": null,
+                    "debugger-attached": null,
+                    "distraction-events": null,
+                    "hesitation-baseline": null,
+                    "behavior-threat-level": null,
+                    "hesitation-percentage": null,
+                    "request-spoof-attempts": null,
+                    "user-agent-spoof-attempts": null,
+                    "api-version-less-than-minimum-count": null,
+                    "mobile-sdk-version-less-than-minimum-count": null
+                  },
+                  "failed-at": null,
+                  "created-at": "2026-05-03T08:17:07.000Z",
+                  "expired-at": null,
+                  "expires-at": "2026-05-04T08:17:07.000Z",
+                  "started-at": null,
+                  "updated-at": "2026-05-03T08:17:07.000Z",
+                  "redacted-at": null,
+                  "completed-at": null,
+                  "reference-id": "flowwage-user-003",
+                  "decisioned-at": null,
+                  "next-step-name": "start_biometric_af066d_start",
+                  "reviewer-comment": null,
+                  "previous-step-name": null,
+                  "marked-for-review-at": null
+                },
+                "relationships": {
+                  "account": {
+                    "data": {
+                      "id": "act_A41AqAmuwqgUAqGJwACzUb5UFAUWqK",
+                      "type": "account"
+                    }
+                  },
+                  "reports": {
+                    "data": []
+                  },
+                  "selfies": {
+                    "data": []
+                  },
+                  "reviewer": {
+                    "data": null
+                  },
+                  "sessions": {
+                    "data": []
+                  },
+                  "template": {
+                    "data": null
+                  },
+                  "documents": {
+                    "data": []
+                  },
+                  "transaction": {
+                    "data": null
+                  },
+                  "verifications": {
+                    "data": []
+                  },
+                  "inquiry-template": {
+                    "data": {
+                      "id": "itmpl_A41AqAmnmHDJ7Rm6Q3ur1BbnaEwwXe",
+                      "type": "inquiry-template"
+                    }
+                  },
+                  "inquiry-template-version": {
+                    "data": {
+                      "id": "itmplv_A41AqAmbJzn5GxodxH3Kww5LRTC8QJ",
+                      "type": "inquiry-template-version"
+                    }
+                  }
+                }
+              }
+            ],
+            "links": {
+              "next": "/api/v1/inquiries?filter%5Breference-id%5D=flowwage-user-003&page%5Bafter%5D=inq_A41AqAmHNbjPhMoD7czG81xG4VA5fx&page%5Bsize%5D=1",
+              "prev": null
+            }
+          },
+          "tier": "unknown",
+          "count": 0,
+          "status": "pending",
+          "success": true,
+          "corridors": []
+        }
+      },
+      {
+        "nodeId": "persona-status",
+        "nodeName": "Persona Status",
+        "status": "success",
+        "output": {
+          "raw": {
+            "data": [
+              {
+                "id": "inq_A41AqAmHNbjPhMoD7czG81xG4VA5fx",
+                "type": "inquiry",
+                "attributes": {
+                  "note": null,
+                  "tags": [],
+                  "fields": {
+                    "birthdate": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "name_last": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "issue_date": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "name_first": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "name_middle": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_city": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "phone_number": "******TED]",
+                    "email_address": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "current_selfie": {
+                      "type": "selfie",
+                      "value": null
+                    },
+                    "expiration_date": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "address_street_1": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_street_2": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "issuing_authority": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "selected_id_class": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "card_access_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_postal_code": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_subdivision": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_country_code": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "identification_class": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "current_government_id": {
+                      "type": "government_id",
+                      "value": null
+                    },
+                    "identification_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "selected_country_code": {
+                      "type": "string",
+                      "value": "US"
+                    },
+                    "hashed_identification_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "government_identification_number_map": {
+                      "type": "json",
+                      "value": null
+                    }
+                  },
+                  "status": "created",
+                  "creator": "API",
+                  "behaviors": {
+                    "bot-score": null,
+                    "devtools-open": null,
+                    "autofill-starts": null,
+                    "completion-time": null,
+                    "hesitation-time": null,
+                    "shortcut-copies": null,
+                    "shortcut-pastes": null,
+                    "autofill-cancels": null,
+                    "hesitation-count": null,
+                    "debugger-attached": null,
+                    "distraction-events": null,
+                    "hesitation-baseline": null,
+                    "behavior-threat-level": null,
+                    "hesitation-percentage": null,
+                    "request-spoof-attempts": null,
+                    "user-agent-spoof-attempts": null,
+                    "api-version-less-than-minimum-count": null,
+                    "mobile-sdk-version-less-than-minimum-count": null
+                  },
+                  "failed-at": null,
+                  "created-at": "2026-05-03T08:17:07.000Z",
+                  "expired-at": null,
+                  "expires-at": "2026-05-04T08:17:07.000Z",
+                  "started-at": null,
+                  "updated-at": "2026-05-03T08:17:07.000Z",
+                  "redacted-at": null,
+                  "completed-at": null,
+                  "reference-id": "flowwage-user-003",
+                  "decisioned-at": null,
+                  "next-step-name": "start_biometric_af066d_start",
+                  "reviewer-comment": null,
+                  "previous-step-name": null,
+                  "marked-for-review-at": null
+                },
+                "relationships": {
+                  "account": {
+                    "data": {
+                      "id": "act_A41AqAmuwqgUAqGJwACzUb5UFAUWqK",
+                      "type": "account"
+                    }
+                  },
+                  "reports": {
+                    "data": []
+                  },
+                  "selfies": {
+                    "data": []
+                  },
+                  "reviewer": {
+                    "data": null
+                  },
+                  "sessions": {
+                    "data": []
+                  },
+                  "template": {
+                    "data": null
+                  },
+                  "documents": {
+                    "data": []
+                  },
+                  "transaction": {
+                    "data": null
+                  },
+                  "verifications": {
+                    "data": []
+                  },
+                  "inquiry-template": {
+                    "data": {
+                      "id": "itmpl_A41AqAmnmHDJ7Rm6Q3ur1BbnaEwwXe",
+                      "type": "inquiry-template"
+                    }
+                  },
+                  "inquiry-template-version": {
+                    "data": {
+                      "id": "itmplv_A41AqAmbJzn5GxodxH3Kww5LRTC8QJ",
+                      "type": "inquiry-template-version"
+                    }
+                  }
+                }
+              }
+            ],
+            "links": {
+              "next": "/api/v1/inquiries?filter%5Breference-id%5D=flowwage-user-003&page%5Bafter%5D=inq_A41AqAmHNbjPhMoD7czG81xG4VA5fx&page%5Bsize%5D=1",
+              "prev": null
+            }
+          },
+          "tier": "unknown",
+          "limits": {},
+          "status": "pending",
+          "success": true,
+          "corridors": []
+        }
+      },
+      {
+        "nodeId": "convert-check",
+        "nodeName": "Convert Bucket > 0",
+        "status": "success",
+        "output": {
+          "condition": true
+        }
+      },
+      {
+        "nodeId": "alloc",
+        "nodeName": "Compute Allocation",
+        "status": "success",
+        "output": {
+          "logs": [],
+          "result": {
+            "chain": "op-sepolia",
+            "token": "****",
+            "yield": 200,
+            "amount": 500,
+            "liquid": 150,
+            "convert": 150
+          },
+          "success": true
+        }
+      },
+      {
+        "nodeId": "xmtp-parse",
+        "nodeName": "Parse XMTP Intent",
+        "status": "success",
+        "output": {
+          "raw": {
+            "type": "payment",
+            "chain": "op-sepolia",
+            "token": "****",
+            "amount": 500,
+            "recipient": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C"
+          },
+          "intent": {
+            "type": "payment",
+            "chain": "op-sepolia",
+            "token": "****",
+            "amount": 500,
+            "recipient": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C"
+          },
+          "isValid": true,
+          "success": true
+        }
+      },
+      {
+        "nodeId": "trigger-1",
+        "nodeName": "Manual Trigger",
+        "status": "success",
+        "output": {
+          "data": {
+            "amount": 500,
+            "timestamp": 1777798124818,
+            "triggered": true,
+            "triggeredAt": "2026-05-03T08:48:44.818Z",
+            "yieldPercent": 40,
+            "liquidPercent": 30,
+            "walletAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C",
+            "convertPercent": 30,
+            "minIncomeTriggerUsd": 50
+          },
+          "success": true
+        }
+      }
+    ]
+  },
+  {
+    "part": "PART-04-DEFERRED-RESUME",
+    "workflowId": "10123y1jmth75i1iar8i6",
+    "executionId": "qgcmnva6iuk9vjsh7yhd0",
+    "status": "success",
+    "txHashes": [],
+    "xmtpMessageIds": [],
+    "xmtpConversationIds": [
+      "debcd4c0c0bd07e3b682552ee63f332a"
+    ],
+    "conversionReferences": [],
+    "transferProof": [],
+    "nodeOutputs": [
+      {
+        "nodeId": "notify-wait",
+        "nodeName": "Still Pending KYC",
+        "status": "success",
+        "output": {
+          "env": "dev",
+          "success": true,
+          "senderAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C",
+          "conversationId": "debcd4c0c0bd07e3b682552ee63f332a",
+          "recipientAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C"
+        }
+      },
+      {
+        "nodeId": "approved",
+        "nodeName": "Approved?",
+        "status": "success",
+        "output": {
+          "condition": false
+        }
+      },
+      {
+        "nodeId": "persona-limits",
+        "nodeName": "Persona Limits",
+        "status": "success",
+        "output": {
+          "raw": {
+            "data": [
+              {
+                "id": "inq_A41AqAmhQjLk1UYSK1JEGFUYqMpzMD",
+                "type": "inquiry",
+                "attributes": {
+                  "note": null,
+                  "tags": [],
+                  "fields": {
+                    "birthdate": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "name_last": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "issue_date": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "name_first": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "name_middle": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_city": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "phone_number": "******TED]",
+                    "email_address": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "current_selfie": {
+                      "type": "selfie",
+                      "value": null
+                    },
+                    "expiration_date": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "address_street_1": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_street_2": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "issuing_authority": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "selected_id_class": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "card_access_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_postal_code": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_subdivision": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_country_code": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "identification_class": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "current_government_id": {
+                      "type": "government_id",
+                      "value": null
+                    },
+                    "identification_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "selected_country_code": {
+                      "type": "string",
+                      "value": "US"
+                    },
+                    "hashed_identification_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "government_identification_number_map": {
+                      "type": "json",
+                      "value": null
+                    }
+                  },
+                  "status": "created",
+                  "creator": "API",
+                  "behaviors": {
+                    "bot-score": null,
+                    "devtools-open": null,
+                    "autofill-starts": null,
+                    "completion-time": null,
+                    "hesitation-time": null,
+                    "shortcut-copies": null,
+                    "shortcut-pastes": null,
+                    "autofill-cancels": null,
+                    "hesitation-count": null,
+                    "debugger-attached": null,
+                    "distraction-events": null,
+                    "hesitation-baseline": null,
+                    "behavior-threat-level": null,
+                    "hesitation-percentage": null,
+                    "request-spoof-attempts": null,
+                    "user-agent-spoof-attempts": null,
+                    "api-version-less-than-minimum-count": null,
+                    "mobile-sdk-version-less-than-minimum-count": null
+                  },
+                  "failed-at": null,
+                  "created-at": "2026-05-03T08:48:47.000Z",
+                  "expired-at": null,
+                  "expires-at": "2026-05-04T08:48:47.000Z",
+                  "started-at": null,
+                  "updated-at": "2026-05-03T08:48:47.000Z",
+                  "redacted-at": null,
+                  "completed-at": null,
+                  "reference-id": "flowwage-user-003",
+                  "decisioned-at": null,
+                  "next-step-name": "start_biometric_af066d_start",
+                  "reviewer-comment": null,
+                  "previous-step-name": null,
+                  "marked-for-review-at": null
+                },
+                "relationships": {
+                  "account": {
+                    "data": {
+                      "id": "act_A41AqAmuwqgUAqGJwACzUb5UFAUWqK",
+                      "type": "account"
+                    }
+                  },
+                  "reports": {
+                    "data": []
+                  },
+                  "selfies": {
+                    "data": []
+                  },
+                  "reviewer": {
+                    "data": null
+                  },
+                  "sessions": {
+                    "data": []
+                  },
+                  "template": {
+                    "data": null
+                  },
+                  "documents": {
+                    "data": []
+                  },
+                  "transaction": {
+                    "data": null
+                  },
+                  "verifications": {
+                    "data": []
+                  },
+                  "inquiry-template": {
+                    "data": {
+                      "id": "itmpl_A41AqAmnmHDJ7Rm6Q3ur1BbnaEwwXe",
+                      "type": "inquiry-template"
+                    }
+                  },
+                  "inquiry-template-version": {
+                    "data": {
+                      "id": "itmplv_A41AqAmbJzn5GxodxH3Kww5LRTC8QJ",
+                      "type": "inquiry-template-version"
+                    }
+                  }
+                }
+              }
+            ],
+            "links": {
+              "next": "/api/v1/inquiries?filter%5Breference-id%5D=flowwage-user-003&page%5Bafter%5D=inq_A41AqAmhQjLk1UYSK1JEGFUYqMpzMD&page%5Bsize%5D=1",
+              "prev": null
+            }
+          },
+          "tier": "unknown",
+          "limits": {},
+          "status": "pending",
+          "success": true
+        }
+      },
+      {
+        "nodeId": "persona-corridors",
+        "nodeName": "Persona Corridors",
+        "status": "success",
+        "output": {
+          "raw": {
+            "data": [
+              {
+                "id": "inq_A41AqAmhQjLk1UYSK1JEGFUYqMpzMD",
+                "type": "inquiry",
+                "attributes": {
+                  "note": null,
+                  "tags": [],
+                  "fields": {
+                    "birthdate": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "name_last": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "issue_date": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "name_first": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "name_middle": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_city": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "phone_number": "******TED]",
+                    "email_address": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "current_selfie": {
+                      "type": "selfie",
+                      "value": null
+                    },
+                    "expiration_date": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "address_street_1": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_street_2": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "issuing_authority": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "selected_id_class": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "card_access_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_postal_code": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_subdivision": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_country_code": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "identification_class": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "current_government_id": {
+                      "type": "government_id",
+                      "value": null
+                    },
+                    "identification_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "selected_country_code": {
+                      "type": "string",
+                      "value": "US"
+                    },
+                    "hashed_identification_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "government_identification_number_map": {
+                      "type": "json",
+                      "value": null
+                    }
+                  },
+                  "status": "created",
+                  "creator": "API",
+                  "behaviors": {
+                    "bot-score": null,
+                    "devtools-open": null,
+                    "autofill-starts": null,
+                    "completion-time": null,
+                    "hesitation-time": null,
+                    "shortcut-copies": null,
+                    "shortcut-pastes": null,
+                    "autofill-cancels": null,
+                    "hesitation-count": null,
+                    "debugger-attached": null,
+                    "distraction-events": null,
+                    "hesitation-baseline": null,
+                    "behavior-threat-level": null,
+                    "hesitation-percentage": null,
+                    "request-spoof-attempts": null,
+                    "user-agent-spoof-attempts": null,
+                    "api-version-less-than-minimum-count": null,
+                    "mobile-sdk-version-less-than-minimum-count": null
+                  },
+                  "failed-at": null,
+                  "created-at": "2026-05-03T08:48:47.000Z",
+                  "expired-at": null,
+                  "expires-at": "2026-05-04T08:48:47.000Z",
+                  "started-at": null,
+                  "updated-at": "2026-05-03T08:48:47.000Z",
+                  "redacted-at": null,
+                  "completed-at": null,
+                  "reference-id": "flowwage-user-003",
+                  "decisioned-at": null,
+                  "next-step-name": "start_biometric_af066d_start",
+                  "reviewer-comment": null,
+                  "previous-step-name": null,
+                  "marked-for-review-at": null
+                },
+                "relationships": {
+                  "account": {
+                    "data": {
+                      "id": "act_A41AqAmuwqgUAqGJwACzUb5UFAUWqK",
+                      "type": "account"
+                    }
+                  },
+                  "reports": {
+                    "data": []
+                  },
+                  "selfies": {
+                    "data": []
+                  },
+                  "reviewer": {
+                    "data": null
+                  },
+                  "sessions": {
+                    "data": []
+                  },
+                  "template": {
+                    "data": null
+                  },
+                  "documents": {
+                    "data": []
+                  },
+                  "transaction": {
+                    "data": null
+                  },
+                  "verifications": {
+                    "data": []
+                  },
+                  "inquiry-template": {
+                    "data": {
+                      "id": "itmpl_A41AqAmnmHDJ7Rm6Q3ur1BbnaEwwXe",
+                      "type": "inquiry-template"
+                    }
+                  },
+                  "inquiry-template-version": {
+                    "data": {
+                      "id": "itmplv_A41AqAmbJzn5GxodxH3Kww5LRTC8QJ",
+                      "type": "inquiry-template-version"
+                    }
+                  }
+                }
+              }
+            ],
+            "links": {
+              "next": "/api/v1/inquiries?filter%5Breference-id%5D=flowwage-user-003&page%5Bafter%5D=inq_A41AqAmhQjLk1UYSK1JEGFUYqMpzMD&page%5Bsize%5D=1",
+              "prev": null
+            }
+          },
+          "tier": "unknown",
+          "count": 0,
+          "status": "pending",
+          "success": true,
+          "corridors": []
+        }
+      },
+      {
+        "nodeId": "persona-status",
+        "nodeName": "Persona Status",
+        "status": "success",
+        "output": {
+          "raw": {
+            "data": [
+              {
+                "id": "inq_A41AqAmhQjLk1UYSK1JEGFUYqMpzMD",
+                "type": "inquiry",
+                "attributes": {
+                  "note": null,
+                  "tags": [],
+                  "fields": {
+                    "birthdate": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "name_last": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "issue_date": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "name_first": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "name_middle": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_city": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "phone_number": "******TED]",
+                    "email_address": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "current_selfie": {
+                      "type": "selfie",
+                      "value": null
+                    },
+                    "expiration_date": {
+                      "type": "date",
+                      "value": null
+                    },
+                    "address_street_1": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_street_2": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "issuing_authority": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "selected_id_class": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "card_access_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_postal_code": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_subdivision": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "address_country_code": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "identification_class": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "current_government_id": {
+                      "type": "government_id",
+                      "value": null
+                    },
+                    "identification_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "selected_country_code": {
+                      "type": "string",
+                      "value": "US"
+                    },
+                    "hashed_identification_number": {
+                      "type": "string",
+                      "value": null
+                    },
+                    "government_identification_number_map": {
+                      "type": "json",
+                      "value": null
+                    }
+                  },
+                  "status": "created",
+                  "creator": "API",
+                  "behaviors": {
+                    "bot-score": null,
+                    "devtools-open": null,
+                    "autofill-starts": null,
+                    "completion-time": null,
+                    "hesitation-time": null,
+                    "shortcut-copies": null,
+                    "shortcut-pastes": null,
+                    "autofill-cancels": null,
+                    "hesitation-count": null,
+                    "debugger-attached": null,
+                    "distraction-events": null,
+                    "hesitation-baseline": null,
+                    "behavior-threat-level": null,
+                    "hesitation-percentage": null,
+                    "request-spoof-attempts": null,
+                    "user-agent-spoof-attempts": null,
+                    "api-version-less-than-minimum-count": null,
+                    "mobile-sdk-version-less-than-minimum-count": null
+                  },
+                  "failed-at": null,
+                  "created-at": "2026-05-03T08:48:47.000Z",
+                  "expired-at": null,
+                  "expires-at": "2026-05-04T08:48:47.000Z",
+                  "started-at": null,
+                  "updated-at": "2026-05-03T08:48:47.000Z",
+                  "redacted-at": null,
+                  "completed-at": null,
+                  "reference-id": "flowwage-user-003",
+                  "decisioned-at": null,
+                  "next-step-name": "start_biometric_af066d_start",
+                  "reviewer-comment": null,
+                  "previous-step-name": null,
+                  "marked-for-review-at": null
+                },
+                "relationships": {
+                  "account": {
+                    "data": {
+                      "id": "act_A41AqAmuwqgUAqGJwACzUb5UFAUWqK",
+                      "type": "account"
+                    }
+                  },
+                  "reports": {
+                    "data": []
+                  },
+                  "selfies": {
+                    "data": []
+                  },
+                  "reviewer": {
+                    "data": null
+                  },
+                  "sessions": {
+                    "data": []
+                  },
+                  "template": {
+                    "data": null
+                  },
+                  "documents": {
+                    "data": []
+                  },
+                  "transaction": {
+                    "data": null
+                  },
+                  "verifications": {
+                    "data": []
+                  },
+                  "inquiry-template": {
+                    "data": {
+                      "id": "itmpl_A41AqAmnmHDJ7Rm6Q3ur1BbnaEwwXe",
+                      "type": "inquiry-template"
+                    }
+                  },
+                  "inquiry-template-version": {
+                    "data": {
+                      "id": "itmplv_A41AqAmbJzn5GxodxH3Kww5LRTC8QJ",
+                      "type": "inquiry-template-version"
+                    }
+                  }
+                }
+              }
+            ],
+            "links": {
+              "next": "/api/v1/inquiries?filter%5Breference-id%5D=flowwage-user-003&page%5Bafter%5D=inq_A41AqAmhQjLk1UYSK1JEGFUYqMpzMD&page%5Bsize%5D=1",
+              "prev": null
+            }
+          },
+          "tier": "unknown",
+          "limits": {},
+          "status": "pending",
+          "success": true,
+          "corridors": []
+        }
+      },
+      {
+        "nodeId": "trigger-1",
+        "nodeName": "Schedule Trigger",
+        "status": "success",
+        "output": {
+          "data": {
+            "amount": 500,
+            "timestamp": 1777798135165,
+            "triggered": true,
+            "triggeredAt": "2026-05-03T08:48:55.165Z",
+            "yieldPercent": 40,
+            "liquidPercent": 30,
+            "walletAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C",
+            "convertPercent": 30,
+            "minIncomeTriggerUsd": 50
+          },
+          "success": true
+        }
+      }
+    ]
+  },
+  {
+    "part": "PART-05-WEEKLY-REBALANCER",
+    "workflowId": "4vnnqvfktse7guh6wpwmq",
+    "executionId": "nig79ydx92cw6tzom12j0",
+    "status": "success",
+    "txHashes": [],
+    "xmtpMessageIds": [],
+    "xmtpConversationIds": [
+      "debcd4c0c0bd07e3b682552ee63f332a"
+    ],
+    "conversionReferences": [],
+    "transferProof": [],
+    "nodeOutputs": [
+      {
+        "nodeId": "xmtp-skip",
+        "nodeName": "XMTP No Rebalance",
+        "status": "success",
+        "output": {
+          "env": "dev",
+          "success": true,
+          "senderAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C",
+          "conversationId": "debcd4c0c0bd07e3b682552ee63f332a",
+          "recipientAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C"
+        }
+      },
+      {
+        "nodeId": "rebalance-check",
+        "nodeName": "Rebalance?",
+        "status": "success",
+        "output": {
+          "condition": false
+        }
+      },
+      {
+        "nodeId": "apyrule",
+        "nodeName": "Rebalance Threshold",
+        "status": "success",
+        "output": {
+          "logs": [],
+          "result": {
+            "rebalance": false,
+            "simulatedDeltaPct": 0.2
+          },
+          "success": true
+        }
+      },
+      {
+        "nodeId": "balance",
+        "nodeName": "Check USDC Balance",
+        "status": "success",
+        "output": {
+          "address": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C",
+          "balance": {
+            "name": "USDC",
+            "symbol": "USDC",
+            "balance": "20.0",
+            "decimals": 6,
+            "balanceRaw": "20000000",
+            "tokenAddress": "0x5fd84259d66cd46123540766be93dfe6d43130d7"
+          },
+          "success": true,
+          "addressLink": "https://sepolia-optimism.etherscan.io/address/0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C"
+        }
+      },
+      {
+        "nodeId": "trigger-1",
+        "nodeName": "Weekly Schedule",
+        "status": "success",
+        "output": {
+          "data": {
+            "amount": 500,
+            "timestamp": 1777798143434,
+            "triggered": true,
+            "triggeredAt": "2026-05-03T08:49:03.434Z",
+            "yieldPercent": 40,
+            "liquidPercent": 30,
+            "walletAddress": "0xa0f2d73eF040eEA360FF007Db2Ef301ee778684C",
+            "convertPercent": 30,
+            "minIncomeTriggerUsd": 50
+          },
+          "success": true
+        }
+      }
+    ]
+  }
+]

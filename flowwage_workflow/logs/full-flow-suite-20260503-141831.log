@@ -1,0 +1,262 @@
+=== PART-01-INCOME-SENTINEL ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_01_INCOME_SENTINEL.workflow.json
+workflow_id=ri22z823aaw2y0gk3664m
+execution_id=p7nltxgmtqtyokhao03r3
+status=success
+{
+  "status": "success",
+  "nodeStatuses": [
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "sf-events",
+      "status": "success"
+    },
+    {
+      "nodeId": "web3-balance",
+      "status": "success"
+    },
+    {
+      "nodeId": "threshold",
+      "status": "success"
+    },
+    {
+      "nodeId": "sablier-state",
+      "status": "success"
+    },
+    {
+      "nodeId": "rf-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "sablier-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "rf-history",
+      "status": "success"
+    },
+    {
+      "nodeId": "sf-incoming",
+      "status": "success"
+    },
+    {
+      "nodeId": "sablier-unlock",
+      "status": "success"
+    },
+    {
+      "nodeId": "alloc",
+      "status": "success"
+    },
+    {
+      "nodeId": "sf-balance",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 11,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": null
+}
+=== PART-02-XMTP-INBOX-TRIGGER ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_05_XMTP_INBOX_TRIGGER.workflow.json
+workflow_id=v5vu4j27j1ak4czvyg6u4
+execution_id=b8iz27ieohb82p2clsnl5
+status=running
+status=running
+status=running
+status=running
+status=success
+{
+  "status": "success",
+  "nodeStatuses": [
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-parse",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-ack",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 4,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": null
+}
+=== PART-03-EXECUTION-GATE ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_02_EXECUTION_GATE.workflow.json
+workflow_id=f43s59ngev0sczagu9kao
+execution_id=fd8mjhqycr6sttjv7dvug
+status=running
+status=running
+status=running
+status=running
+status=success
+{
+  "status": "success",
+  "nodeStatuses": [
+    {
+      "nodeId": "xmtp-parse",
+      "status": "success"
+    },
+    {
+      "nodeId": "convert-check",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-status",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-corridors",
+      "status": "success"
+    },
+    {
+      "nodeId": "alloc",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-approved",
+      "status": "success"
+    },
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-limits",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-webhook-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-create",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-kyc",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 11,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": null
+}
+=== PART-04-DEFERRED-RESUME ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_03_DEFERRED_RESUME.workflow.json
+workflow_id=10123y1jmth75i1iar8i6
+execution_id=qgcmnva6iuk9vjsh7yhd0
+status=running
+status=running
+status=running
+status=success
+{
+  "status": "success",
+  "nodeStatuses": [
+    {
+      "nodeId": "approved",
+      "status": "success"
+    },
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-limits",
+      "status": "success"
+    },
+    {
+      "nodeId": "notify-wait",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-status",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-corridors",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 6,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": null
+}
+=== PART-05-WEEKLY-REBALANCER ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_04_WEEKLY_REBALANCER.workflow.json
+workflow_id=4vnnqvfktse7guh6wpwmq
+execution_id=nig79ydx92cw6tzom12j0
+status=running
+status=running
+status=success
+{
+  "status": "success",
+  "nodeStatuses": [
+    {
+      "nodeId": "rebalance-check",
+      "status": "success"
+    },
+    {
+      "nodeId": "apyrule",
+      "status": "success"
+    },
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "balance",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-skip",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 5,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": null
+}
+SUITE_LOG=/Users/sam/FlowWage/flowwage_workflow/logs/full-flow-suite-20260503-141831.log
+SUITE_REPORT=/Users/sam/FlowWage/flowwage_workflow/logs/full-flow-suite-20260503-141831.report.json

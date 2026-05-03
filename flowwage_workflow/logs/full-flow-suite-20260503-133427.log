@@ -1,0 +1,274 @@
+=== PART-01-INCOME-SENTINEL ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_01_INCOME_SENTINEL.workflow.json
+workflow_id=xju0suzb541j7dp1n18l4
+execution_id=rb4eorsuh7cvmkltho9lk
+status=running
+status=error
+{
+  "status": "error",
+  "nodeStatuses": [
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "rf-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "sablier-unlock",
+      "status": "error"
+    },
+    {
+      "nodeId": "sf-events",
+      "status": "success"
+    },
+    {
+      "nodeId": "rf-history",
+      "status": "success"
+    },
+    {
+      "nodeId": "web3-balance",
+      "status": "success"
+    },
+    {
+      "nodeId": "sablier-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "sf-incoming",
+      "status": "success"
+    },
+    {
+      "nodeId": "sablier-state",
+      "status": "success"
+    },
+    {
+      "nodeId": "sf-balance",
+      "status": "error"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 8,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": {
+    "failedNodeId": null,
+    "lastSuccessfulNodeId": "sf-incoming",
+    "lastSuccessfulNodeName": "Superfluid Incoming",
+    "executionTrace": [
+      "trigger-1",
+      "rf-sub",
+      "rf-history",
+      "sablier-sub",
+      "sf-events",
+      "sablier-state",
+      "sf-incoming",
+      "sablier-unlock"
+    ],
+    "error": "Failed to fetch real-time balance: could not decode result data (value=\"0x60c8dab136efd0c6ec6c881b8e315a0ebe857e060eb7576e8ea934d04f714acf\", info={ \"method\": \"realtimeBalanceOfNow\", \"signature\": \"realtimeBalanceOfNow(address)\" }, code=BAD_DATA, version=6.16.0)"
+  }
+}
+=== PART-02-XMTP-INBOX-TRIGGER ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_05_XMTP_INBOX_TRIGGER.workflow.json
+workflow_id=87qtuz8pnwdu0oluaagty
+execution_id=ddlgiwelftaeursfpwvej
+status=running
+status=running
+status=running
+status=running
+status=running
+status=success
+{
+  "status": "success",
+  "nodeStatuses": [
+    {
+      "nodeId": "xmtp-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-parse",
+      "status": "success"
+    },
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-ack",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 4,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": null
+}
+=== PART-03-EXECUTION-GATE ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_02_EXECUTION_GATE.workflow.json
+workflow_id=m7ptar31oblzttjtuz2vx
+execution_id=6dtn1srcibeo9myyl6t34
+status=running
+status=running
+status=running
+status=running
+status=success
+{
+  "status": "success",
+  "nodeStatuses": [
+    {
+      "nodeId": "xmtp-kyc",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-parse",
+      "status": "success"
+    },
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-limits",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-create",
+      "status": "success"
+    },
+    {
+      "nodeId": "convert-check",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-corridors",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-webhook-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-approved",
+      "status": "success"
+    },
+    {
+      "nodeId": "alloc",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-status",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 11,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": null
+}
+=== PART-04-DEFERRED-RESUME ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_03_DEFERRED_RESUME.workflow.json
+workflow_id=eq76yzpwair0k4dbc637x
+execution_id=ss3swaj4ir143ktmni7p0
+status=running
+status=running
+status=running
+status=success
+{
+  "status": "success",
+  "nodeStatuses": [
+    {
+      "nodeId": "approved",
+      "status": "success"
+    },
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "notify-wait",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-status",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-corridors",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-limits",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 6,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": null
+}
+=== PART-05-WEEKLY-REBALANCER ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_04_WEEKLY_REBALANCER.workflow.json
+workflow_id=zow7c2jvveg3iexdhnm8n
+execution_id=3jwjf3xq0ux1ico4m7bbj
+status=running
+status=running
+status=running
+status=running
+status=error
+{
+  "status": "error",
+  "nodeStatuses": [
+    {
+      "nodeId": "balance",
+      "status": "success"
+    },
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "route-quote",
+      "status": "error"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 3,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": {
+    "failedNodeId": null,
+    "lastSuccessfulNodeId": "balance",
+    "lastSuccessfulNodeName": "Check USDC Balance",
+    "executionTrace": [
+      "trigger-1",
+      "balance",
+      "route-quote"
+    ],
+    "error": "Failed to fetch route quote: Across API request failed with HTTP 400: {\"type\":\"AcrossApiError\",\"code\":\"INVALID_PARAM\",\"status\":400,\"message\":\"Failed to fetch swap quote: No bridge routes found for 11155420 -> 11155420\",\"id\":\"qn9jb-1777795504783-9600dd54225a\"}"
+  }
+}
+SUITE_LOG=/Users/sam/FlowWage/flowwage_workflow/logs/full-flow-suite-20260503-133427.log

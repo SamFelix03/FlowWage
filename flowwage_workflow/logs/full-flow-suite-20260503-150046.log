@@ -1,0 +1,320 @@
+=== PART-01-INCOME-SENTINEL ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_01_INCOME_SENTINEL.workflow.json
+workflow_id=e2aepdjike51s2l1ijtvl
+execution_id=rjk1kt3ywfigkopzh63xt
+status=success
+{
+  "status": "success",
+  "nodeStatuses": [
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "sf-events",
+      "status": "success"
+    },
+    {
+      "nodeId": "rf-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "web3-balance",
+      "status": "success"
+    },
+    {
+      "nodeId": "sablier-state",
+      "status": "success"
+    },
+    {
+      "nodeId": "sablier-unlock",
+      "status": "success"
+    },
+    {
+      "nodeId": "rf-history",
+      "status": "success"
+    },
+    {
+      "nodeId": "sablier-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "sf-incoming",
+      "status": "success"
+    },
+    {
+      "nodeId": "sf-balance",
+      "status": "success"
+    },
+    {
+      "nodeId": "threshold",
+      "status": "success"
+    },
+    {
+      "nodeId": "alloc",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 12,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": null
+}
+=== PART-02-XMTP-INBOX-TRIGGER ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_05_XMTP_INBOX_TRIGGER.workflow.json
+workflow_id=n8hyepg4072ih5vlum5sd
+execution_id=on1ik24zn95conjt15zo7
+status=running
+status=running
+status=running
+status=success
+{
+  "status": "success",
+  "nodeStatuses": [
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-parse",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-ack",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 4,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": null
+}
+=== PART-03-EXECUTION-GATE ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_02_EXECUTION_GATE.workflow.json
+workflow_id=xjmn1k5igfa2mk5vrfdgg
+execution_id=f94s15vz460i0m1ncuae2
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=running
+status=error
+{
+  "status": "error",
+  "nodeStatuses": [
+    {
+      "nodeId": "persona-status",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-parse",
+      "status": "success"
+    },
+    {
+      "nodeId": "convert-check",
+      "status": "success"
+    },
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "alloc",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-approved",
+      "status": "success"
+    },
+    {
+      "nodeId": "off-corridors",
+      "status": "success"
+    },
+    {
+      "nodeId": "off-quote",
+      "status": "success"
+    },
+    {
+      "nodeId": "rate-window",
+      "status": "success"
+    },
+    {
+      "nodeId": "super-route",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-corridors",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-limits",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-webhook-sub",
+      "status": "success"
+    },
+    {
+      "nodeId": "off-rate",
+      "status": "success"
+    },
+    {
+      "nodeId": "super-init",
+      "status": "error"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 15,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": {
+    "failedNodeId": null,
+    "lastSuccessfulNodeId": "super-route",
+    "lastSuccessfulNodeName": "Superchain Route Quote",
+    "executionTrace": [
+      "trigger-1",
+      "xmtp-parse",
+      "alloc",
+      "convert-check",
+      "persona-status",
+      "persona-corridors",
+      "persona-limits",
+      "persona-webhook-sub",
+      "persona-approved",
+      "off-corridors",
+      "off-quote",
+      "off-rate",
+      "rate-window",
+      "super-route",
+      "super-init"
+    ],
+    "error": "Failed to initiate transfer: could not coalesce error (error={ \"code\": -32000, \"message\": \"intrinsic gas too low: gas 0, minimum needed 23940\" }, payload={ \"id\": 6, \"jsonrpc\": \"2.0\", \"method\": \"eth_sendRawTransaction\", \"params\": [ \"0x02f9021283aa37dc02830f4240830f443480944e8e101924ede233c13e2d8622dc8aed2872d50580b901a7ad5425c6000000000000000000000000a0f2d73ef040eea360ff007db2ef301ee778684c000000000000000000000000a0f2d73ef040eea360ff007db2ef301ee778684c0000000000000000000000005fd84259d66cd46123540766be93dfe6d43130d70000000000000000000000001c7d4b196cb0c7b01d743fbc6116a902379c723800000000000000000000000000000000000000000000000000000000000f424000000000000000000000000000000000000000000000000000000000000f3f280000000000000000000000000000000000000000000000000000000000aa36a700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000069f713dc0000000000000000000000000000000000000000000000000000000069f72ffc00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000180000000000000000000000000000000000000000000000000000000000000000073c0dec080a021bda0167db69d4a95ee6c0e0fe011224789521145434e9c8faa497a724278f3a02690851a8b45b4c144c425c771d53cb2f25dda783243d64e56e5245df5079d03\" ] }, code=UNKNOWN_ERROR, version=6.16.0)"
+  }
+}
+=== PART-04-DEFERRED-RESUME ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_03_DEFERRED_RESUME.workflow.json
+workflow_id=pa3i5zld3x6pdfphrx35i
+execution_id=esg5fglya8782he4i3tw1
+status=running
+status=running
+status=running
+status=success
+{
+  "status": "success",
+  "nodeStatuses": [
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "approved",
+      "status": "success"
+    },
+    {
+      "nodeId": "notify-wait",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-status",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-corridors",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-limits",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 6,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": null
+}
+=== PART-05-WEEKLY-REBALANCER ===
+Importing /Users/sam/FlowWage/flowwage_workflow/workflows/FLOWWAGE_04_WEEKLY_REBALANCER.workflow.json
+workflow_id=2ua8l4j98nm1f5it35foo
+execution_id=4mhvxrurvbc83aah0tvtv
+status=running
+status=running
+status=error
+{
+  "status": "error",
+  "nodeStatuses": [
+    {
+      "nodeId": "rebalance-check",
+      "status": "success"
+    },
+    {
+      "nodeId": "route-quote",
+      "status": "success"
+    },
+    {
+      "nodeId": "init-transfer",
+      "status": "error"
+    },
+    {
+      "nodeId": "balance",
+      "status": "success"
+    },
+    {
+      "nodeId": "apyrule",
+      "status": "success"
+    },
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 6,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": {
+    "failedNodeId": null,
+    "lastSuccessfulNodeId": "route-quote",
+    "lastSuccessfulNodeName": "Superchain Route Quote",
+    "executionTrace": [
+      "trigger-1",
+      "balance",
+      "apyrule",
+      "rebalance-check",
+      "route-quote",
+      "init-transfer"
+    ],
+    "error": "Failed to initiate transfer: could not coalesce error (error={ \"code\": -32000, \"message\": \"intrinsic gas too low: gas 0, minimum needed 23940\" }, payload={ \"id\": 12, \"jsonrpc\": \"2.0\", \"method\": \"eth_sendRawTransaction\", \"params\": [ \"0x02f9021283aa37dc02830f4240830f443480944e8e101924ede233c13e2d8622dc8aed2872d50580b901a7ad5425c6000000000000000000000000a0f2d73ef040eea360ff007db2ef301ee778684c000000000000000000000000a0f2d73ef040eea360ff007db2ef301ee778684c0000000000000000000000005fd84259d66cd46123540766be93dfe6d43130d70000000000000000000000001c7d4b196cb0c7b01d743fbc6116a902379c723800000000000000000000000000000000000000000000000000000000000f424000000000000000000000000000000000000000000000000000000000000f3f280000000000000000000000000000000000000000000000000000000000aa36a700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000069f713dc0000000000000000000000000000000000000000000000000000000069f72ffc00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000180000000000000000000000000000000000000000000000000000000000000000073c0dec080a021bda0167db69d4a95ee6c0e0fe011224789521145434e9c8faa497a724278f3a02690851a8b45b4c144c425c771d53cb2f25dda783243d64e56e5245df5079d03\" ] }, code=UNKNOWN_ERROR, version=6.16.0)"
+  }
+}
+SUITE_LOG=/Users/sam/FlowWage/flowwage_workflow/logs/full-flow-suite-20260503-150046.log
+SUITE_REPORT=/Users/sam/FlowWage/flowwage_workflow/logs/full-flow-suite-20260503-150046.report.json

@@ -1,0 +1,56 @@
+Importing workflow from /Users/sam/FlowWage/flowwage_workflow/FLOWWAGE_WORKFLOW_IMPORT.json
+Imported workflow: dxnt9eiziqj72q32p5kua
+Fetching workflow for integration wiring
+Injecting integration IDs for persona/xmtp/offramp action nodes
+Executing workflow
+Execution started: 895suyvks1113jheg72kk
+Status: running
+Status: running
+Status: running
+Status: success
+{
+  "status": "success",
+  "nodeStatuses": [
+    {
+      "nodeId": "trigger-1",
+      "status": "success"
+    },
+    {
+      "nodeId": "parse-intent",
+      "status": "success"
+    },
+    {
+      "nodeId": "compute-allocation",
+      "status": "success"
+    },
+    {
+      "nodeId": "convert-positive",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-approved",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-create",
+      "status": "success"
+    },
+    {
+      "nodeId": "persona-check",
+      "status": "success"
+    },
+    {
+      "nodeId": "xmtp-kyc-link",
+      "status": "success"
+    }
+  ],
+  "progress": {
+    "totalSteps": 0,
+    "completedSteps": 8,
+    "runningSteps": 0,
+    "currentNodeId": null,
+    "currentNodeName": null,
+    "percentage": 0
+  },
+  "errorContext": null
+}
