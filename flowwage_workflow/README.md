@@ -48,3 +48,53 @@ From the requirements narrative: a user paid in USDC often faces:
 - and poor traceability for what happened after payment.
 
 Real-world example:
+
+A freelancer in Lagos receives 800 USDC. They need NGN for expenses and want the rest earning yield. Without orchestration, this means manually checking KYC status, searching off-ramp rates, deciding chain movement, approving contracts, and documenting transaction proofs.  
+FlowWage does this as one execution with structured outcomes (`depositTxnRef`, `conversionReference`, XMTP conversation/message proof).
+
+## Architecture and Scope
+
+This implementation uses a single full graph workflow:
+
+- Entry and income context:
+  - `request-finance/*`
+  - `sablier/*`
+  - `superfluid/*`
+  - `web3/check-token-balance`
+- Control/intent rail:
+  - `xmtp/subscribe-to-inbox`
+  - `xmtp/parse-payment-intent`
+- Compliance gate:
+  - `persona/*`
+- Conversion rail:
+  - `offramp/*`
+- Cross-chain execution:
+  - `superchain/*` (Across testnet API paths)
+- Yield rail:
+  - `web3/approve-token`
+  - `aave-v3/supply`
+- Proof/notification rail:
+  - `xmtp/send-transaction-receipt`
+  - `xmtp/send-message`
+
+## Added Integrations and Why Each Was Required
+
+### 1) XMTP (`xmtp`)
+
+Required to support encrypted wallet-to-wallet intent and receipts:
+
+- `xmtp/send-message`
+- `xmtp/subscribe-to-inbox`
+- `xmtp/parse-payment-intent`
+- `xmtp/send-transaction-receipt`
+
+### 2) Persona (`persona`)
+
+Required for pre-offramp compliance gating:
+
+- `persona/check-verification-status`
+- `persona/create-inquiry`
+- `persona/get-cleared-corridors`
+- `persona/subscribe-verification-webhook`
+- `persona/get-transaction-limits`
+
