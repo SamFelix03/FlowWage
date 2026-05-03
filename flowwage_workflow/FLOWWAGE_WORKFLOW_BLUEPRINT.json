@@ -1,1 +1,282 @@
-{}
+{
+  "name": "FlowWage_Autonomous_Stablecoin_Lifecycle",
+  "version": "1.0.0",
+  "target": "keeperhub",
+  "description": "Graph blueprint for end-to-end income detection, allocation, Persona-gated off-ramp, execution, deferral, and notifications.",
+  "globalInputs": {
+    "user_reference_id": "string",
+    "primary_wallet_address": "address",
+    "allocation_policy": {
+      "liquid_percent": "number",
+      "yield_percent": "number",
+      "convert_percent": "number",
+      "min_income_trigger_usd": "number"
+    },
+    "offramp_policy": {
+      "target_country_code": "string",
+      "target_fiat_currency": "string",
+      "max_deferral_hours": "number",
+      "rerate_interval_hours": "number",
+      "min_rate_delta_to_execute_pct": "number"
+    },
+    "persona": {
+      "template_id": "itmpl_A41AqAmnmHDJ7Rm6Q3ur1BbnaEwwXe",
+      "integration_id": "int_persona_local"
+    },
+    "integrations": {
+      "offramp_integration_id": "string",
+      "xmtp_integration_id": "string"
+    }
+  },
+  "nodes": [
+    {
+      "id": "trigger_income_event",
+      "type": "trigger",
+      "triggerMode": "webhook_or_schedule_fallback",
+      "sources": [
+        "sablier/subscribe-to-stream-events",
+        "superfluid/get-stream-events",
+        "request-finance/subscribe-invoice-events"
+      ]
+    },
+    {
+      "id": "read_current_balances",
+      "type": "action",
+      "actionType": "web3/check-token-balance",
+      "notes": "Run per configured chain/token; aggregate into one context snapshot."
+    },
+    {
+      "id": "read_stream_balance",
+      "type": "action",
+      "actionType": "superfluid/get-real-time-balance"
+    },
+    {
+      "id": "compute_allocation",
+      "type": "code",
+      "logic": "split income into liquid/yield/convert amounts from allocation_policy"
+    },
+    {
+      "id": "get_offramp_quote",
+      "type": "action",
+      "actionType": "offramp/get-best-quote"
+    },
+    {
+      "id": "get_offramp_rate_history",
+      "type": "action",
+      "actionType": "offramp/get-rate-history"
+    },
+    {
+      "id": "persona_check_status",
+      "type": "action",
+      "actionType": "persona/check-verification-status",
+      "integrationIdRef": "persona.integration_id",
+      "inputPriority": [
+        "inquiryId",
+        "referenceId"
+      ]
+    },
+    {
+      "id": "persona_create_inquiry",
+      "type": "action",
+      "actionType": "persona/create-inquiry",
+      "integrationIdRef": "persona.integration_id",
+      "staticConfig": {
+        "inquiryTemplateId": "itmpl_A41AqAmnmHDJ7Rm6Q3ur1BbnaEwwXe"
+      }
+    },
+    {
+      "id": "queue_deferred_conversion",
+      "type": "code",
+      "logic": "persist conversion bucket with status pending_kyc or pending_rate_window"
+    },
+    {
+      "id": "notify_user_kyc_required",
+      "type": "action",
+      "actionType": "xmtp/send-message",
+      "optional": true
+    },
+    {
+      "id": "route_quote_yield",
+      "type": "action",
+      "actionType": "superchain/get-route-quote"
+    },
+    {
+      "id": "route_initiate_yield",
+      "type": "action",
+      "actionType": "superchain/initiate-transfer"
+    },
+    {
+      "id": "route_poll_yield",
+      "type": "action",
+      "actionType": "superchain/poll-transfer-status"
+    },
+    {
+      "id": "deploy_yield",
+      "type": "action",
+      "actionType": "protocol/... (selected yield venue)"
+    },
+    {
+      "id": "execute_offramp",
+      "type": "action",
+      "actionType": "offramp/trigger-conversion"
+    },
+    {
+      "id": "poll_offramp_status",
+      "type": "action",
+      "actionType": "offramp/get-conversion-status"
+    },
+    {
+      "id": "execute_recurring_rules",
+      "type": "action",
+      "actionType": "web3/transfer-token",
+      "optional": true
+    },
+    {
+      "id": "send_tx_receipt",
+      "type": "action",
+      "actionType": "xmtp/send-transaction-receipt",
+      "optional": true
+    },
+    {
+      "id": "final_notification",
+      "type": "action",
+      "actionType": "telegram/send-message"
+    },
+    {
+      "id": "persona_webhook_resume_trigger",
+      "type": "trigger",
+      "triggerMode": "webhook",
+      "source": "persona/subscribe-verification-webhook"
+    }
+  ],
+  "conditions": [
+    {
+      "id": "income_threshold_met",
+      "expression": "income_amount >= allocation_policy.min_income_trigger_usd"
+    },
+    {
+      "id": "convert_bucket_nonzero",
+      "expression": "convert_amt > 0"
+    },
+    {
+      "id": "persona_approved",
+      "expression": "persona.status == 'approved'"
+    },
+    {
+      "id": "rate_good_now",
+      "expression": "quote_delta_pct >= offramp_policy.min_rate_delta_to_execute_pct"
+    },
+    {
+      "id": "deferral_timeout_hit",
+      "expression": "elapsed_hours >= offramp_policy.max_deferral_hours"
+    }
+  ],
+  "edges": [
+    [
+      "trigger_income_event",
+      "read_current_balances"
+    ],
+    [
+      "trigger_income_event",
+      "read_stream_balance"
+    ],
+    [
+      "read_current_balances",
+      "compute_allocation"
+    ],
+    [
+      "read_stream_balance",
+      "compute_allocation"
+    ],
+    [
+      "compute_allocation",
+      "get_offramp_quote"
+    ],
+    [
+      "compute_allocation",
+      "get_offramp_rate_history"
+    ],
+    [
+      "compute_allocation",
+      "persona_check_status"
+    ],
+    [
+      "persona_check_status",
+      "route_quote_yield"
+    ],
+    [
+      "route_quote_yield",
+      "route_initiate_yield"
+    ],
+    [
+      "route_initiate_yield",
+      "route_poll_yield"
+    ],
+    [
+      "route_poll_yield",
+      "deploy_yield"
+    ],
+    [
+      "deploy_yield",
+      "execute_offramp"
+    ],
+    [
+      "execute_offramp",
+      "poll_offramp_status"
+    ],
+    [
+      "poll_offramp_status",
+      "execute_recurring_rules"
+    ],
+    [
+      "execute_recurring_rules",
+      "send_tx_receipt"
+    ],
+    [
+      "send_tx_receipt",
+      "final_notification"
+    ],
+    [
+      "persona_check_status",
+      "persona_create_inquiry"
+    ],
+    [
+      "persona_create_inquiry",
+      "queue_deferred_conversion"
+    ],
+    [
+      "queue_deferred_conversion",
+      "notify_user_kyc_required"
+    ],
+    [
+      "persona_webhook_resume_trigger",
+      "persona_check_status"
+    ]
+  ],
+  "retryPolicy": {
+    "transientExternal": {
+      "maxRetries": 3,
+      "backoff": "exponential"
+    },
+    "policyBlock": {
+      "maxRetries": 0,
+      "defer": true
+    },
+    "hardConfigError": {
+      "maxRetries": 0,
+      "failFast": true
+    }
+  },
+  "idempotency": {
+    "keyFormula": "user_reference_id + source_tx_hash + action_type + bucket_type",
+    "duplicateBehavior": "skip_execution_and_log"
+  },
+  "acceptanceChecks": [
+    "create-inquiry works with template id",
+    "status read works by inquiryId",
+    "deferred queue resumes from Persona webhook",
+    "offramp executes only when policy allows",
+    "receipts/notifications include execution id and tx references"
+  ]
+}
+
